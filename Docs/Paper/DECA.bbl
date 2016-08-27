@@ -1,0 +1,94 @@
+\begin{thebibliography}{10}
+
+\bibitem{Casey2009}
+E.~Casey, M.~Ferraro, and L.~Nguyen, ``{Investigation Delayed Is Justice
+  Denied: Proposals for Expediting Forensic Examinations of Digital
+  Evidence*},'' {\em Journal of Forensic Sciences}, vol.~54, pp.~1353--1364,
+  nov 2009.
+
+\bibitem{pollitt2013triage}
+M.~M. Pollitt, ``Triage: A practical solution or admission of failure,'' {\em
+  Digital Investigation}, vol.~10, no.~2, pp.~87--88, 2013.
+
+\bibitem{marturana2013machine}
+F.~Marturana and S.~Tacconi, ``A machine learning-based triage methodology for
+  automated categorization of digital media,'' {\em Digital Investigation},
+  vol.~10, no.~2, pp.~193--204, 2013.
+
+\bibitem{schell2007cyber}
+B.~H. Schell, M.~V. Martin, P.~C. Hung, and L.~Rueda, ``Cyber child
+  pornography: A review paper of the social and legal issues and remedies—and
+  a proposed technological solution,'' {\em Aggression and violent behavior},
+  vol.~12, no.~1, pp.~45--63, 2007.
+
+\bibitem{james2014measuring}
+J.~I. James, A.~Lopez-Fernandez, and P.~Gladyhsev, ``Measuring accuracy of
+  automated parsing and categorization tools and processes in digital
+  investigations,'' in {\em Digital Forensics and Cyber Crime}, pp.~147--169,
+  Springer, 2014.
+
+\bibitem{shaw2013practical}
+A.~Shaw and A.~Browne, ``A practical and robust approach to coping with large
+  volumes of data submitted for digital forensic examination,'' {\em Digital
+  Investigation}, vol.~10, no.~2, pp.~116--128, 2013.
+
+\bibitem{rogers2003role}
+M.~Rogers, ``The role of criminal profiling in the computer forensics
+  process,'' {\em Computers \& Security}, vol.~22, no.~4, pp.~292--298, 2003.
+
+\bibitem{overill2013triage}
+R.~E. Overill, J.~A. Silomon, and K.~A. Roscoe, ``Triage template pipelines in
+  digital forensic investigations,'' {\em Digital Investigation}, vol.~10,
+  no.~2, pp.~168--174, 2013.
+
+\bibitem{Koopmans2013}
+M.~B. Koopmans and J.~I. James, ``{Automated network triage},'' {\em Digital
+  Investigation}, vol.~10, pp.~129--137, sep 2013.
+
+\bibitem{richard2005scalpel}
+G.~G. Richard~III and V.~Roussev, ``Scalpel: A frugal, high performance file
+  carver.,'' in {\em DFRWS}, 2005.
+
+\bibitem{grenier2007photorec}
+C.~Grenier, ``Photorec,'' 2007.
+
+\bibitem{Richard2007inplace}
+G.~Richard, V.~Roussev, and L.~Marziale, ``{In-Place File Carving},'' in {\em
+  Advances in Digital Forensics III} (P.~Craiger and S.~Shenoi, eds.),
+  vol.~242, pp.~217--230, New York, NY: Springer New York, 2007.
+
+\bibitem{MeijerRob2012}
+{Meijer, Rob}, ``{The carve path zero-storage library and filesystem},'' may
+  2012.
+
+\bibitem{Garfinkel2015hashbased}
+S.~L. Garfinkel and M.~McCarrin, ``{Hash-based carving: Searching media for
+  complete files and file fragments with sector hashing and hashdb},'' {\em
+  Digital Investigation}, vol.~14, pp.~S95--S105, aug 2015.
+
+\bibitem{Veenman2007statistical}
+C.~J. Veenman, ``{Statistical Disk Cluster Classification for File Carving},''
+  in {\em Third International Symposium on Information Assurance and Security},
+  pp.~393--398, IEEE, aug 2007.
+
+\bibitem{li2011novel}
+Q.~Li, A.~Ong, P.~Suganthan, and V.~Thing, ``A novel support vector machine
+  approach to high entropy data fragment classification,'' {\em SAISMC},
+  pp.~236--247, 2011.
+
+\bibitem{ousterhout2010case}
+J.~Ousterhout, P.~Agrawal, D.~Erickson, C.~Kozyrakis, J.~Leverich,
+  D.~Mazi{\`e}res, S.~Mitra, A.~Narayanan, G.~Parulkar, M.~Rosenblum, {\em
+  et~al.}, ``The case for ramclouds: scalable high-performance storage entirely
+  in dram,'' {\em ACM SIGOPS Operating Systems Review}, vol.~43, no.~4,
+  pp.~92--105, 2010.
+
+\bibitem{Battleships1931}
+``{Salvo Is New Game With a Nautical Air},'' {\em The Milwaukee Journal}, July
+  1931.
+
+\bibitem{garfinkel2007carving}
+S.~L. Garfinkel, ``Carving contiguous and fragmented files with fast object
+  validation,'' {\em digital investigation}, vol.~4, pp.~2--12, 2007.
+
+\end{thebibliography}

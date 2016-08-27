@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: dfrws-us-2016.aux
+The style file: elsarticle-harv.bst
+Database file #1: DECA.bib
+Warning--to sort, need author or key in gladyshevjames2015
+Warning--empty year in gladyshevjames2015; set to ????
+Warning--empty journal in grenier2007photorec
+Warning--empty pages in richard2005scalpel
+You've used 20 entries,
+            2821 wiz_defined-function locations,
+            750 strings with 7728 characters,
+and the built_in function-call counts, 9557 in all, are:
+= -- 1024
+> -- 369
+< -- 17
++ -- 147
+- -- 119
+* -- 784
+:= -- 1653
+add.period$ -- 61
+call.type$ -- 20
+change.case$ -- 146
+chr.to.int$ -- 20
+cite$ -- 26
+duplicate$ -- 386
+empty$ -- 718
+format.name$ -- 175
+if$ -- 1973
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 19
+newline$ -- 69
+num.names$ -- 78
+pop$ -- 145
+preamble$ -- 1
+purify$ -- 119
+quote$ -- 0
+skip$ -- 303
+stack$ -- 0
+substring$ -- 614
+swap$ -- 71
+text.length$ -- 4
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 177
+warning$ -- 4
+while$ -- 91
+width$ -- 0
+write$ -- 222
+(There were 4 warnings)

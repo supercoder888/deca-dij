@@ -1,0 +1,98 @@
+\begin{thebibliography}{20}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+
+\bibitem[{gla(????)}]{gladyshevjames2015}
+, ???? Deca source code.
+
+\bibitem[{Casey et~al.(2009)Casey, Ferraro, and Nguyen}]{Casey2009}
+Casey, E., Ferraro, M., Nguyen, L., nov 2009. {Investigation Delayed Is Justice
+  Denied: Proposals for Expediting Forensic Examinations of Digital Evidence*}.
+  Journal of Forensic Sciences 54~(6), 1353--1364.
+
+\bibitem[{Garfinkel(2007)}]{garfinkel2007carving}
+Garfinkel, S.~L., 2007. Carving contiguous and fragmented files with fast
+  object validation. digital investigation 4, 2--12.
+
+\bibitem[{Garfinkel and McCarrin(2015)}]{Garfinkel2015hashbased}
+Garfinkel, S.~L., McCarrin, M., aug 2015. {Hash-based carving: Searching media
+  for complete files and file fragments with sector hashing and hashdb}.
+  Digital Investigation 14, S95--S105.
+
+\bibitem[{Grenier(2007)}]{grenier2007photorec}
+Grenier, C., 2007. Photorec.
+\newline\urlprefix\url{http://www.cgsecurity.org/wiki/PhotoRec}
+
+\bibitem[{James et~al.(2014)James, Lopez-Fernandez, and
+  Gladyhsev}]{james2014measuring}
+James, J.~I., Lopez-Fernandez, A., Gladyhsev, P., 2014. Measuring accuracy of
+  automated parsing and categorization tools and processes in digital
+  investigations. In: Digital Forensics and Cyber Crime. Springer, pp.
+  147--169.
+
+\bibitem[{Jaynes(2003)}]{jaynes2003probability}
+Jaynes, E.~T., 2003. Probability theory: the logic of science. Cambridge
+  university press.
+
+\bibitem[{Koopmans and James(2013)}]{Koopmans2013}
+Koopmans, M.~B., James, J.~I., sep 2013. {Automated network triage}. Digital
+  Investigation 10~(2), 129--137.
+
+\bibitem[{Li et~al.(2011)Li, Ong, Suganthan, and Thing}]{li2011novel}
+Li, Q., Ong, A., Suganthan, P., Thing, V., 2011. A novel support vector machine
+  approach to high entropy data fragment classification. SAISMC, 236--247.
+
+\bibitem[{Marturana and Tacconi(2013)}]{marturana2013machine}
+Marturana, F., Tacconi, S., 2013. A machine learning-based triage methodology
+  for automated categorization of digital media. Digital Investigation 10~(2),
+  193--204.
+
+\bibitem[{{Meijer, Rob}(2012)}]{MeijerRob2012}
+{Meijer, Rob}, may 2012. {The carve path zero-storage library and filesystem}.
+\newline\urlprefix\url{https://github.com/DNPA/carvfs}
+
+\bibitem[{Memon and Pal(2006)}]{memon2006automated}
+Memon, N., Pal, A., 2006. Automated reassembly of file fragmented images using
+  greedy algorithms. Image Processing, IEEE Transactions on 15~(2), 385--393.
+
+\bibitem[{Overill et~al.(2013)Overill, Silomon, and Roscoe}]{overill2013triage}
+Overill, R.~E., Silomon, J.~A., Roscoe, K.~A., 2013. Triage template pipelines
+  in digital forensic investigations. Digital Investigation 10~(2), 168--174.
+
+\bibitem[{Pollitt(2013)}]{pollitt2013triage}
+Pollitt, M.~M., 2013. Triage: A practical solution or admission of failure.
+  Digital Investigation 10~(2), 87--88.
+
+\bibitem[{Richard et~al.(2007)Richard, Roussev, and
+  Marziale}]{Richard2007inplace}
+Richard, G., Roussev, V., Marziale, L., 2007. {In-Place File Carving}. In:
+  Craiger, P., Shenoi, S. (Eds.), Advances in Digital Forensics III. Vol. 242.
+  Springer New York, New York, NY, pp. 217--230.
+
+\bibitem[{Richard~III and Roussev(2005)}]{richard2005scalpel}
+Richard~III, G.~G., Roussev, V., 2005. Scalpel: A frugal, high performance file
+  carver. In: DFRWS.
+
+\bibitem[{Rogers(2003)}]{rogers2003role}
+Rogers, M., 2003. The role of criminal profiling in the computer forensics
+  process. Computers \& Security 22~(4), 292--298.
+
+\bibitem[{Schell et~al.(2007)Schell, Martin, Hung, and Rueda}]{schell2007cyber}
+Schell, B.~H., Martin, M.~V., Hung, P.~C., Rueda, L., 2007. Cyber child
+  pornography: A review paper of the social and legal issues and remedies—and
+  a proposed technological solution. Aggression and violent behavior 12~(1),
+  45--63.
+
+\bibitem[{Shaw and Browne(2013)}]{shaw2013practical}
+Shaw, A., Browne, A., 2013. A practical and robust approach to coping with
+  large volumes of data submitted for digital forensic examination. Digital
+  Investigation 10~(2), 116--128.
+
+\bibitem[{Veenman(2007)}]{Veenman2007statistical}
+Veenman, C.~J., aug 2007. {Statistical Disk Cluster Classification for File
+  Carving}. In: Third International Symposium on Information Assurance and
+  Security. IEEE, pp. 393--398.
+
+\end{thebibliography}
