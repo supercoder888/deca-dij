@@ -52,10 +52,10 @@ int deca_init(Deca *c,
 /**
  * Simple linear carving algorithm looking for JPEG header and footer signatures
  * @param c - Deca carver object initialised with deca_init
- * @return deca error code
+ * @return deca error code (<0) or the number of the last tested block (>=0)
  */
 
-int deca_linear(Deca* c)
+long deca_linear(Deca* c, long start, long l)
 {
 	int   buflen;
 	char *buf;            /* Buffer for reading block / sector into */
@@ -68,6 +68,7 @@ int deca_linear(Deca* c)
 
 	long filesize;        /* length of the current file being carved (in clusters) */
 	long blocksprocessed;
+	long bound;
 
 	int buf_contains_jpeg_data;
 	int buf_contains_jpeg_header;
@@ -90,7 +91,8 @@ int deca_linear(Deca* c)
 	 */
     infile = 0;
 
-	DECA_BD_SKIP(c->b,1);               /* Skip to the next carvable sector / cluster */
+    bound = l;
+	DECA_BD_SKIP_BACK(c->b,start);               /* Skip to the first carvable sector / cluster */
 	DECA_BD_READ_BLOCK(c->b,buf,buflen);   /* Read next block */
 	DECA_BD_MARK_BLOCK(c->b);
 	blocksprocessed++;
@@ -161,6 +163,7 @@ int deca_linear(Deca* c)
                    lastbyte = buf[buflen-1]; // Store last byte of the current block for matching footer signature in the next file block
 				}
 			}
+			if ((bound--)==0) break;
 #ifdef CARVE_NONJPEG
 			else  /* Save samples of non-jpeg data */
 			{
@@ -210,6 +213,7 @@ int deca_linear(Deca* c)
 					return DECA_FAIL;
 				}
 				infile = 0;
+				bound = l;
 
 			}
 
@@ -219,6 +223,7 @@ int deca_linear(Deca* c)
 			{
 				buf_contains_jpeg_header=0;
 				infile = 0;
+				bound = l;
 				continue;
 			}
 		}
@@ -236,7 +241,7 @@ int deca_linear(Deca* c)
 #endif
 
 
-	return DECA_OK;
+	return c->b->blk;
 }
 
 /**
@@ -278,7 +283,7 @@ int deca_deca(Deca *c)
 	giveups = 0;
 	fpblocks = 0;
 
-	carvings = malloc((c->e.missOffset*2+1)*buflen);
+	carvings = malloc(buflen);
 
 
     /*
@@ -287,20 +292,15 @@ int deca_deca(Deca *c)
      * from the given cluster that is most likely to contain the information we need.
      */
 
-    /*
-     * First we skip 1 cluster ahead (this helps in the case of recovering unallocated data,
-     * because after Deca_bd initialisation in "unallocated" mode, blk points
-     * to the last unallocated block in the partition)
-     */
 	prevblk = c->b->blk;
-	DECA_BD_SKIP(c->b,c->e.missOffset);
+	DECA_BD_SKIP(c->b,c->e.missOffset-1);
 
 	/* Now we keep sampling until we reach the end of the drive / partition until we wrap-around. */
 	while (c->b->wrap_around == 0)
 	{
 
 		/* We place working buffer at the end of allocated carving space */
-		buf = carvings+(c->e.missOffset-1)*buflen;
+		buf = carvings;
 
 		/* Step 1. now read the chosen block */
 		DECA_BD_READ_BLOCK(c->b,buf,buflen);   /* Read next block */
@@ -317,243 +317,12 @@ int deca_deca(Deca *c)
 			/* If the buffer DOES seem to be part of JPEG,
 			 * let's look for header and footer signatures and carve it out
 			 */
+		    long ret = deca_linear(c,c->e.missOffset-1,c->e.missOffset);
+		    if (ret < 0) return ret;
 
-			fphelper = blocksprocessed;
-
-			/*
-			 * Step 2.1 first we read blocks backwards from the current block
-			 * and check for header signature. The read data fills the carving space from end to front,
-			 * until we either find the the header or run out of space.
-			 */
-
-			int blockswritten;
-			int jpeg_header_found = deca_detector_tst_jpeg_header(&(c->d),buf,buflen);
-			int buf_contains_jpeg_footer;  /* =0 not found, !=0 contains length of JPEG data up to and including the footer */
-			long probed_blk = c->b->blk;  /* Save current location on the disk */
-			int back_blk_count;
-			int verbosity_level = c->p.verbose;
-			int skipped;
-			clock_t starttime = clock()-(c->p.s);
-
-			filesize = 1; /* We have one block in our would-be file */
-
-			if (jpeg_header_found == 0)
-			{
-					/* Step back a number of blocks in the carvings[] space and on the disk and read from disk to memory */
-					skipped = DECA_BD_SKIP_BACK(c->b,c->e.missOffset);
-					if (skipped == 0) break;
-
-					buf -= buflen * skipped;
-					DECA_BD_READ_BLOCK(c->b,buf,buflen*skipped);
-					blocksprocessed += skipped;
-					sigtested += skipped;
-
-					/* Now check all of them for JPEG signature, going backwards */
-					back_blk_count=skipped;
-					buf = buf+(buflen*(skipped-1));
-					do
-					{
-						jpeg_header_found = deca_detector_tst_jpeg_header(&(c->d),buf,buflen);
-						/*if (back_blk_count % 64 == 0)
-						{
-							buf_contains_jpeg_data = deca_detector_tst_jpeg_data(&(c->d),buf,buflen);
-							svmtested++;
-						}*/
-
-						back_blk_count--;
-						buf -= buflen;
-						filesize++;
-					}
-					while ((back_blk_count>0) && (jpeg_header_found == 0) && (buf_contains_jpeg_data == 1) ); /* Not sure we need the last condition */
-
-					buf += buflen;
-					if ((buf_contains_jpeg_data == 0) && (jpeg_header_found == 0))
-					{
-						filesize--;
-						buf += buflen;
-					}
-					if ( (jpeg_header_found == 1) || (buf_contains_jpeg_data == 0) ) break;
-
-				/* Mark blocks processed so-far */
-				// deca_bd_mark_blocks(c->b,probed_blk-(filesize-1),filesize-1);
-
-				/*
-				 * If we found JPEG signature - good, we start writing it into the file and
-				 * continue looking for the foore signature.
-				 *
-				 * If we did not find otherwise we simply wasted time,
-				 * so we should print a warning about it. :-)
-				 */
-				if (jpeg_header_found == 0)
-				{
-					//fprintf(stderr,"\nDECA_DECA: Could not find header after probing at %d!!!\n",probed_blk);
-					/*
-					 * Go back to the probed_block and skip recommended number of blocks assuming we have NOT FOUND a file
-					 */
-					giveups++;
-					fpblocks += blocksprocessed-fphelper;
-					c->b->blk = probed_blk;
-					prevblk = c->b->blk;
-					DECA_BD_SKIP(c->b,c->e.missOffset);
-					continue;
-				}
-			}
-
-			/*
-			 * At this point we have found the beginning of JPEG file. buf points to it.
-			 * filesize*buflen is the number of butes after *buf that need to be written into the
-			 * newly created carved file.
-			 */
-
-			/* First check if the footer signature is already in the carvings[] */
-			buf_contains_jpeg_footer = deca_detector_tst_jpeg_footer(&(c->d),buf,buflen*filesize,0);
-
-			/* Start writing carved file & look for the footer signature */
-			if (verbosity_level>0)
-			{
-				/* Carving statistics output (CSV format):
-				 * carv-start-time,file-number,carv-start-sect,carv-stop-time,carv-stop-sect,file-length,total-carved-clust,total-clust-processed
-				 */
-				DECA_PROFILER_PRINTF(c->p,"%ld,%d,%ld,",starttime,c->nextfileno,probed_blk-(filesize-1));
-			}
-
-			/* Create new file in the output directory and start writing into it */
-			//sprintf(nextfilename,"%s/%ld_%d.jpg",c->outputPath,probed_blk-(filesize-1),c->nextfileno);
-			sprintf(nextfilename,"%s/%llu.jpg",c->outputPath,c->b->blk);
-			c->nextfileno++;
-			fout = fopen(nextfilename,"wb");
-			if (fout == NULL)
-			{
-				free(nextfilename);
-				free(carvings);
-				return DECA_FAIL;
-			}
-
-			if (buf_contains_jpeg_footer != 0)
-			{
-				//fprintf(stderr,"\nDECA_DECA: Found JPEG Footer!!!\n");
-				/* The entire file is in the buffer, so we simply save it using buf_contains_jpeg_footer as the file size */
-				blockswritten =fwrite(buf,buf_contains_jpeg_footer,1,fout);
-				totalsize += (buf_contains_jpeg_footer/512)+1;
-			}
-			else
-			{
-				/* Otherwise write out entire buffer until the end of carvings[] space */
-				blockswritten = fwrite(buf,buflen*filesize,1,fout);
-				totalsize += filesize;
-			}
-			if (blockswritten != 1)
-			{
-				free(nextfilename);
-				free(carvings);
-				return DECA_FAIL;
-			}
-
-			/* If we have found the entire file, close the output file */
-			if (buf_contains_jpeg_footer!=0)
-			{
-				/* Print the ending of the profiling information if profiler is armed */
-				if (deca_profiler_printtime(&(c->p))>0)
-				{
-					/* Carving statistics output (CSV format):
-					 * carv-start-time,file-number,carv-start-sect,carv-stop-time,carv-stop-sect,file-length,total-carved-clust,total-clust-processed
-					 */
-					DECA_PROFILER_PRINTF(c->p,",%llu,%ld,%ld,%ld\n",c->b->blk,filesize,totalsize,blocksprocessed);
-				}
-
-				/* so close output file */
-				if (fclose(fout) != 0)
-				{
-					free(nextfilename);
-					free(carvings);
-					return DECA_FAIL;
-				}
-
-				/* set blk to the last probel blk */
-				c->b->blk = probed_blk;
-			}
-			else
-			{
-				/*
-				 * ...otherwise (we did not find footer signature),
-				 * use linear carving to search for the end signature
-				 */
-
-				/* Go back to the probed block */
-				c->b->blk = probed_blk;
-
-				/* Restore buf to its usual address at the end of carvigns[] space */
-				buf = carvings+(DECA_MAX_CARVED_SIZE-1)*buflen;
-
-				/* set up lastbyte value properly */
-				lastbyte = buf[buflen-1];
-
-				do {
-					DECA_BD_SKIP(c->b,1);
-					DECA_BD_READ_BLOCK(c->b,buf,buflen);
-					blocksprocessed++;
-					sigtested++;
-					totalsize++;
-
-					//buf_contains_jpeg_data = deca_detector_tst_jpeg_data(&(c->d),buf,buflen);
-					buf_contains_jpeg_footer = deca_detector_tst_jpeg_footer(&(c->d),buf,buflen,lastbyte);
-
-					if (((buf_contains_jpeg_data == 1)||(buf_contains_jpeg_footer!=0)) && (probed_blk < c->b->blk))
-					{
-						int blockswritten;
-						//DECA_BD_MARK_BLOCK(c->b);
-						/* Write it into the output file */
-						if (buf_contains_jpeg_footer != 0)
-						{
-							blockswritten = fwrite(buf,buf_contains_jpeg_footer,1,fout);
-						}
-						else
-						{
-							blockswritten = fwrite(buf,buflen,1,fout);
-						}
-						if (blockswritten != 1)
-						{
-							free(nextfilename);
-							free(carvings);
-							return DECA_FAIL;
-						}
-						filesize +=1;
-						totalsize +=1;
-					}
-
-					/* If the read block contains footer signature of a JPG file, or NON-JPG data */
-					if (buf_contains_jpeg_footer != 0 || (buf_contains_jpeg_data == 0) || (probed_blk > c->b->blk))
-					{
-						/* Print the ending of the profiling information if profiler is armed */
-						if (deca_profiler_printtime(&(c->p))>0)
-						{
-							/* Carving statistics output (CSV format):
-							 * carv-start-time,file-number,carv-start-sect,carv-stop-time,carv-stop-sect,file-length,total-carved-clust,total-clust-processed
-							 */
-							DECA_PROFILER_PRINTF(c->p,",%llu,%ld,%ld,%ld\n",c->b->blk,filesize,totalsize,blocksprocessed);
-						}
-						/* close output file */
-						if (fclose(fout) != 0)
-						{
-							free(nextfilename);
-							free(carvings);
-							return DECA_FAIL;
-						}
-					}
-				} while ((buf_contains_jpeg_footer == 0) && (buf_contains_jpeg_data == 1));
-			}
-			/*
-			 * File has been carved, so now we can skip a prescribed number of blocks assuming that we are
-			 * at the end of a successfully carved file.
-			 */
-			prevblk = c->b->blk;
-			DECA_BD_SKIP(c->b,c->e.hitOffset);
 		}
-		else  /* our initial jpeg test did not succeed - we need to jump and test another block */
-		{
-			prevblk = c->b->blk;
-			DECA_BD_SKIP(c->b,c->e.missOffset);
-		}
+		/* our initial jpeg test did not succeed - we need to jump and test another block */
+		DECA_BD_SKIP(c->b,c->e.missOffset-1);
 	}
 	free(nextfilename);
 	free(carvings);
@@ -568,7 +337,7 @@ int deca_deca(Deca *c)
 			       "   Give-ups (JPEG mis-detects):  %ld\n"
 			       "   False-positive blocks (tot):  %ld",c->b->size,blocksprocessed,svmtested,sigtested,giveups,fpblocks);
 
-	return DECA_OK;
+	return c->b->blk;
 }
 
 int deca_run(Deca *c, int decaflags)
@@ -577,7 +346,7 @@ int deca_run(Deca *c, int decaflags)
 	switch (decaflags)
 	{
 	case DECA_ALGORITHM_LINEAR:
-		return deca_linear(c);
+		return deca_linear(c,0,c->b->btc);
 		break;
 	case DECA_ALGORITHM_DECA:    // 20% of the drive are processed using sampling
 		result=deca_deca(c);

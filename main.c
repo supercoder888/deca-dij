@@ -200,8 +200,7 @@ void notify_error(int errcode)
 	case DECA_FS_NOT_PRESENT:
 		fprintf(stderr,"DECA (%d): Specified volume/partition on the image /disk does not contain a recognizable file system\n",errcode); break;
 	case DECA_FAIL:
-	default:
-		fprintf(stderr,"DECA (%d): Error\n",errcode);
+		fprintf(stderr,"DECA : Error\n",errcode);
 	}
 	return;
 }

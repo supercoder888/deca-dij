@@ -103,7 +103,7 @@ int deca_run(Deca *carver, int decaflags);
  * Print profiling statistics to the specified output stream.
  * Works only if DECA_PROFILE is defined.
  * @param carver - Deca carver structure initialized with Deca_init
- * @return deca error code
+ * @return deca error code (<0) or the number of blocks processed (>=0)
  */
 int deca_statistics(Deca *carver);
 
