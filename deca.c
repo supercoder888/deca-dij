@@ -70,9 +70,9 @@ long deca_linear(Deca* c, long start, long l)
 	long blocksprocessed;
 	long bound;
 
-	int buf_contains_jpeg_data;
+	int lastblocksize;
 	int buf_contains_jpeg_header;
-	int buf_contains_jpeg_footer;
+
 
 	buflen = c->b->bs;
     buf = (char *)malloc(buflen);
@@ -80,11 +80,6 @@ long deca_linear(Deca* c, long start, long l)
 
     c->totalsize = 0;
     blocksprocessed = 0;
-
-#ifdef CARVE_NONJPEG
-    FILE *nonjpg = fopen("nonjpg.bin","wb");
-    int nonjpgcnt = 0;
-#endif
 
 	/* Simple linear file carving algorithm: start at the beginning and examine every carvable block
 	 * anything between matching JPEG header and footer signatures is extracted as a carved file.
@@ -96,6 +91,8 @@ long deca_linear(Deca* c, long start, long l)
 	DECA_BD_READ_BLOCK(c->b,buf,buflen);   /* Read next block */
 	DECA_BD_MARK_BLOCK(c->b);
 	blocksprocessed++;
+
+	lastbyte = 0;
 
     while (c->b->btc)
 	{
@@ -125,19 +122,21 @@ long deca_linear(Deca* c, long start, long l)
 					free(buf);
 					return DECA_FAIL;
 				}
-				blockswritten = fwrite(buf,buflen,1,fout);
-				if (blockswritten != 1)
-				{
-					free(nextfilename);
-					free(buf);
-					return DECA_FAIL;
-				}
 				filesize = 1;
 				c->totalsize += 1;
 
 				/* If the read block contains also the footer signature, the entire file is in one block */
-				if (deca_detector_tst_jpeg_footer(&(c->d),buf,buflen,0) == 1)
+				lastblocksize = deca_detector_tst_jpeg_footer(&(c->d),buf,buflen,0);
+				if (lastblocksize > 0 )
 				{
+					blockswritten = fwrite(buf,lastblocksize,1,fout);
+					if (blockswritten != 1)
+					{
+						free(nextfilename);
+						free(buf);
+						return DECA_FAIL;
+					}
+
 					/* Print the ending of the profiling information if profiler is armed */
 					if (deca_profiler_printtime(&(c->p))>0)
 					{
@@ -155,35 +154,37 @@ long deca_linear(Deca* c, long start, long l)
 						return DECA_FAIL;
 					}
 					infile = 0;
+					bound = l;
 				}
 				else
 				{
+				   blockswritten = fwrite(buf,buflen,1,fout);
+				   if (blockswritten != 1)
+			       {
+					  free(nextfilename);
+					  free(buf);
+					  return DECA_FAIL;
+				   }
 				   /* Switch carver into in-file state */
                    infile = 1;
                    lastbyte = buf[buflen-1]; // Store last byte of the current block for matching footer signature in the next file block
 				}
 			}
-			if ((bound--)==0) break;
-#ifdef CARVE_NONJPEG
-			else  /* Save samples of non-jpeg data */
+			else
 			{
-				if((nonjpgcnt++)<9000)
-					fwrite(buf,buflen,1,nonjpg);
+				if ((bound--)==0) break;
 			}
-#endif
 		}
 		else /* in-file state */
 		{
 			/* If the next read block contains relevant (i.e. JPG data) */
-			//buf_contains_jpeg_data = deca_detector_tst_jpeg_data(&(c->d),buf,buflen);
-			buf_contains_jpeg_data = 1;
-			buf_contains_jpeg_footer = deca_detector_tst_jpeg_footer(&(c->d),buf,buflen,lastbyte);
-			buf_contains_jpeg_header = deca_detector_tst_jpeg_header(&(c->d),buf,buflen);
+			lastblocksize = deca_detector_tst_jpeg_footer(&(c->d),buf,buflen,lastbyte);
 
-			if (buf_contains_jpeg_data && (!buf_contains_jpeg_header))
+			if (lastblocksize == 0)
 			{
 			   /* Write it into the output file */
 			   int blockswritten = fwrite(buf,buflen,1,fout);
+			   lastbyte = buf[buflen-1];
 			   if (blockswritten != 1)
 			   {
 				   free(nextfilename);
@@ -193,10 +194,15 @@ long deca_linear(Deca* c, long start, long l)
 			   filesize +=1;
 			   c->totalsize +=1;
 			}
-
-			/* If the read block contains footer signature of a JPG file, or NON-JPG data, or header */
-			if (buf_contains_jpeg_footer || (!buf_contains_jpeg_data)|| buf_contains_jpeg_header)
+			else
 			{
+				int blockswritten = fwrite(buf,lastblocksize,1,fout);
+				if (blockswritten != 1)
+				{
+				   free(nextfilename);
+				   free(buf);
+				   return DECA_FAIL;
+			    }
 				/* Print the ending of the profiling information if profiler is armed */
 				if (deca_profiler_printtime(&(c->p))>0)
 				{
@@ -214,17 +220,6 @@ long deca_linear(Deca* c, long start, long l)
 				}
 				infile = 0;
 				bound = l;
-
-			}
-
-			lastbyte = buf[buflen-1]; // Store last byte of the current block for matching footer signature in the next file block
-
-			if (buf_contains_jpeg_header)
-			{
-				buf_contains_jpeg_header=0;
-				infile = 0;
-				bound = l;
-				continue;
 			}
 		}
 		DECA_BD_SKIP(c->b,1);               /* Skip to the next carvable sector / cluster */

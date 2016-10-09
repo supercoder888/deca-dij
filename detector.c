@@ -76,17 +76,20 @@ int deca_detector_tst_jpeg_header(Deca_detector *d, char *buf, int len)
 int deca_detector_tst_jpeg_footer(Deca_detector *d, char *buf, int len, int lastbyte)
 {
 	int i;
-	for(i=len-1;i>0;i--)
+	for(i=len-1;i>1;i--)
 	{
-		if(buf[i]=='\xd9')
+		if(buf[i]!='\xff')
 		{
-			if(buf[i-1]=='\xff')
+  	  	  if(buf[i-1]=='\xd9')
+		  {
+			if(buf[i-2]=='\xff')
 			{
-				return i+1;
+				return i;
 			}
+		  }
 		}
 	}
-	if ((buf[1]=='\xd9') && (lastbyte == '\xff'))
+	if ((buf[1]!='\xff') && (buf[0]=='\xd9') && (lastbyte == '\xff'))
 	{
 		return 1;
 	}
