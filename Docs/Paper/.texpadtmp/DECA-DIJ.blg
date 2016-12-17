@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99d (TeX Live 2016)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: DECA-DIJ.aux
+The style file: ../elsarticle-harv.bst
+Database file #1: ../DECA.bib
+Warning--empty journal in grenier2007photorec
+Warning--empty pages in richard2005scalpel
+You've used 20 entries,
+            2821 wiz_defined-function locations,
+            753 strings with 7819 characters,
+and the built_in function-call counts, 9680 in all, are:
+= -- 1034
+> -- 388
+< -- 18
++ -- 153
+- -- 125
+* -- 797
+:= -- 1686
+add.period$ -- 61
+call.type$ -- 20
+change.case$ -- 148
+chr.to.int$ -- 20
+cite$ -- 22
+duplicate$ -- 388
+empty$ -- 714
+format.name$ -- 186
+if$ -- 1990
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 19
+newline$ -- 70
+num.names$ -- 82
+pop$ -- 143
+preamble$ -- 1
+purify$ -- 121
+quote$ -- 0
+skip$ -- 306
+stack$ -- 0
+substring$ -- 612
+swap$ -- 73
+text.length$ -- 4
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 177
+warning$ -- 2
+while$ -- 94
+width$ -- 0
+write$ -- 224
+(There were 2 warnings)

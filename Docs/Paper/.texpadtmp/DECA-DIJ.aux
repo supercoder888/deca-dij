@@ -1,0 +1,113 @@
+\relax 
+\emailauthor{pavel.gladyshev@ucd.ie}{Pavel Gladyshev}
+\citation{Casey2009,pollitt2013triage}
+\citation{marturana2013machine,schell2007cyber,james2014measuring}
+\citation{shaw2013practical,rogers2003role,overill2013triage}
+\citation{Koopmans2013,Casey2009}
+\citation{Koopmans2013}
+\citation{richard2005scalpel}
+\citation{grenier2007photorec}
+\citation{garfinkel2007carving}
+\Newlabel{add1}{a}
+\Newlabel{add2}{b}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Contribution}{1}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Sequential file carving}{1}}
+\citation{Veenman2007statistical}
+\citation{li2011novel}
+\citation{Garfinkel2015hashbased}
+\citation{memon2006automated}
+\citation{Richard2007inplace}
+\citation{MeijerRob2012}
+\@writefile{toc}{\contentsline {section}{\numberline {3}File carving as a Battleships game}{2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Decision theory basics}{2}}
+\newlabel{eq:decision}{{4}{2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}File carving as decision problem}{2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces A 1-dimensional Battleships game.}}{3}}
+\newlabel{fig:battleships_on_a_canal}{{1}{3}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Utility of file carving actions}{3}}
+\newlabel{utility-of-carving}{{3.2.1}{3}}
+\newlabel{eqn:utility-def}{{8}{3}}
+\newlabel{eq:carving-decision}{{10}{3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces The total amount of data recovered by a sequential file carver as a function of time. In this example the relevant data (JPEG images) occupied approximately 5\% of a 32Gb disk image.}}{4}}
+\newlabel{fig:sequential}{{2}{4}}
+\citation{li2011novel}
+\citation{jaynes2003probability}
+\@writefile{toc}{\contentsline {section}{\numberline {4}The need for selective recovery of large JPEG files}{5}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Detector of JPEG data}{5}}
+\newlabel{sec:detector}{{5}{5}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Probability of finding JPEG data in a particular block on the drive}{5}}
+\newlabel{sec:probability}{{6}{5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Histogram of actual file sizes from a personal collection of raw digital photographs in JPEG format. Horizontal axis is the size of files in Kibibytes, vertical axis is the number of files. Each of the peaks visible in the histogram corresponds to a particular camera and image size and quality settings.}}{6}}
+\newlabel{fig:jpeg-dist}{{3}{6}}
+\citation{gladyshevjames2015}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Simple detector of JPEG data ($JpegDetect$)}}{7}}
+\newlabel{alg:detector}{{1}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Estimating probability function with small-scale simulation}{7}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Probability of finding relevant data in a particular disk block, assuming that JPEG files are \emph  {exactly} 11 blocks in size.}}{8}}
+\newlabel{fig:fig-20blk-11min-11max2d}{{4}{8}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Explanation of the trapezoidal form of the $p(a)$ probability distribution in Figure 4\hbox {}.}}{9}}
+\newlabel{fig:pa_explan}{{5}{9}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Simulating results of successful and unsuccessful block testing}{9}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Exploring properties of $T_{proc}(a)$ for hard disk drives and solid state drives.}{9}}
+\newlabel{sec:tproc}{{7}{9}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Probability of finding relevant data in a particular disk block, given that certain number of blocks are occupied by relevant data and assuming that JPEG files are \emph  {exactly} 6 blocks in size.}}{10}}
+\newlabel{fig:fig-20blk-6min-6max3d}{{6}{10}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Probability of finding relevant data in a particular disk block, given that certain number of blocks are occupied by relevant data and assuming that JPEG files are \emph  {at least} 6 blocks in size.}}{11}}
+\newlabel{fig:fig-20blk-6min-20max3d}{{7}{11}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Probability of finding relevant data in a particular disk block, assuming that JPEG files are \emph  {at least} 6 blocks in size.}}{12}}
+\newlabel{fig:fig-20blk-6min-20max2d}{{8}{12}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Posterior probability of finding JPEG data in a particular disk block, after testing $b_5$ and finding no relevant JPEG data there. All JPEG files are assumed to be at least 6 blocks in length.}}{13}}
+\newlabel{fig:fig-20blk-6min-20max-testloc-5-0-2d}{{9}{13}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Posterior probability of finding JPEG data in a particular disk block, after testing $b_5$ and finding that it contains JPEG data. All JPEG files are assumed to be at least 6 blocks in length.}}{14}}
+\newlabel{fig:fig-20blk-6min-20max-testloc-5-1-2d}{{10}{14}}
+\newlabel{eq:tproc-eq}{{11}{15}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Designing new carving strategy for large, non-fragmented JPEG files}{15}}
+\newlabel{sec:decision}{{8}{15}}
+\newlabel{eq:carving-decision-2}{{13}{15}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces Time of random block testing on Fujitsu 120 Gb HDD.}}{16}}
+\newlabel{fig:seek_time_hdd}{{11}{16}}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Time of random block testing on SSDNow 120 Gb SSD.}}{17}}
+\newlabel{fig:seek_time_ssd}{{12}{17}}
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces $T_{rbt}(a)$ and $T_{seq}(a)$ calculated for SSDNow 120 Gb SSD.}}{18}}
+\newlabel{fig:processing_time_ssd}{{13}{18}}
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces $T_{rbt}(a)$ and $T_{seq}(a)$ calculated for Fujitsu 120 Gb HDD.}}{19}}
+\newlabel{fig:processing_time_hdd}{{14}{19}}
+\citation{gladyshevjames2015}
+\@writefile{toc}{\contentsline {section}{\numberline {9}DECA: a decision-theoretic carving program}{20}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces DECA: Data sampling mode.}}{20}}
+\newlabel{alg:deca-js}{{2}{20}}
+\@writefile{toc}{\contentsline {section}{\numberline {10}Implementation and Evaluation of DECA carver}{20}}
+\newlabel{sec:implement}{{10}{20}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.1}Experimentation Design}{20}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {3}{\ignorespaces DECA: Bounded sequential carving ($BSC$).}}{21}}
+\newlabel{alg:deca-bsc}{{3}{21}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.2}Evaluation}{21}}
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces DECA time performance improvements in percentage when comparing carving times on an HDD to carving times on an SSD. This graph shows that DECA performs better with larger disk images when minimum-file-size is greater than 600.}}{22}}
+\newlabel{fig:4v32}{{15}{22}}
+\citation{Richard2007inplace,MeijerRob2012}
+\bibstyle{elsarticle-harv}
+\bibdata{DECA}
+\bibcite{Casey2009}{{1}{2009}{{Casey et~al.}}{{Casey, Ferraro, and Nguyen}}}
+\bibcite{garfinkel2007carving}{{2}{2007}{{Garfinkel}}{{}}}
+\bibcite{Garfinkel2015hashbased}{{3}{2015}{{Garfinkel and McCarrin}}{{}}}
+\bibcite{gladyshevjames2015}{{4}{2016}{{Gladyshev and James}}{{}}}
+\bibcite{grenier2007photorec}{{5}{2007}{{Grenier}}{{}}}
+\bibcite{james2014measuring}{{6}{2014}{{James et~al.}}{{James, Lopez-Fernandez, and Gladyhsev}}}
+\bibcite{jaynes2003probability}{{7}{2003}{{Jaynes}}{{}}}
+\bibcite{Koopmans2013}{{8}{2013}{{Koopmans and James}}{{}}}
+\bibcite{li2011novel}{{9}{2011}{{Li et~al.}}{{Li, Ong, Suganthan, and Thing}}}
+\bibcite{marturana2013machine}{{10}{2013}{{Marturana and Tacconi}}{{}}}
+\bibcite{MeijerRob2012}{{11}{2012}{{Meijer, Rob}}{{}}}
+\bibcite{memon2006automated}{{12}{2006}{{Memon and Pal}}{{}}}
+\bibcite{overill2013triage}{{13}{2013}{{Overill et~al.}}{{Overill, Silomon, and Roscoe}}}
+\bibcite{pollitt2013triage}{{14}{2013}{{Pollitt}}{{}}}
+\bibcite{Richard2007inplace}{{15}{2007}{{Richard et~al.}}{{Richard, Roussev, and Marziale}}}
+\bibcite{richard2005scalpel}{{16}{2005}{{Richard~III and Roussev}}{{}}}
+\bibcite{rogers2003role}{{17}{2003}{{Rogers}}{{}}}
+\bibcite{schell2007cyber}{{18}{2007}{{Schell et~al.}}{{Schell, Martin, Hung, and Rueda}}}
+\bibcite{shaw2013practical}{{19}{2013}{{Shaw and Browne}}{{}}}
+\bibcite{Veenman2007statistical}{{20}{2007}{{Veenman}}{{}}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {10.2.1}Discussion}{23}}
+\@writefile{toc}{\contentsline {section}{\numberline {11}Conclusions}{23}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.1}Future Work}{23}}
