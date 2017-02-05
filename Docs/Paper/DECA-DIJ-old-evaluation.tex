@@ -520,12 +520,14 @@ Note that DECA does not revert immediately to the sampling mode after finding th
 \end{algorithm}
 
 \section{Implementation and Evaluation of DECA carver} \label{sec:implement}
-The previously described DECA algorithm was implemented using C++. We have provided repository containing the source code and test data \citep{gladyshevjames2015}. The software implementation defaults to linear carving mode. The software provides a function to sample a disk to determine its seek time. This allows an investigator to determine the jump distance at which DECA carving becomes faster than traditional linear carving. The software also has functions for carving using the DECA algorithm. An investigator can set the minimal sector jump distance in 512-sector increments. The following sections test the theorized performance of the DECA algorithm, and compare the algorithm to other file carvers commonly used in digital investigations.
+The previously described DECA algorithm was implemented using C++. The source code can be found in \citep{gladyshevjames2015}. The software implementation defaults to linear carving mode. Two of the main functions of the software. First, a disk can be sampled to determine its seek time. With seek-time information, an investigator can determine jump distance at which DECA carving becomes faster than traditional linear carving. Second, the software allows for carving using the DECA algorithm while setting the minimal sector jump distance (in 512 sector increments).
+
+Experimentation seeks to demonstrate the theorized performance of the DECA algorithm, and compare the algorithm to other file carvers commonly used in digital investigations.
 
 \subsection{Experimentation Design}
-DECA is based on estimates of the distribution of JPEG data on a disk. Based on this estimation, DECA attempts to search only the most likely locations for related data. The result of the DECA algorithm is that some sectors will be skipped. In some cases, skipping sectors that are unlikely to contain relevant data may result in carving speed up. However, this method is also likely to miss smaller files depending on the jump distance.
+DECA is based on estimates of the distribution of JPEG data on a disk. Based on this estimation, DECA attempts to search only the most likely locations for related data. The result of the DECA algorithm is that some sectors will be skipped. In some cases, skipping sectors that are unlikely to contain relevant data may result in carving speed up. However, this method is also likely to miss smaller files.
 
-DECA, in practical terms, can be described simply; If the jump size is high, carve times and number of carved files will decrease. If the jump size is low, carve times will increase and the number of carved files will increase. As discussed, this depends on the seek time of the disk holding data to be analyzed. From the prior description, we propose that DECA is most beneficial when attempting to carve a small number of large files from a disk with a low seek time.
+DECA, in practical terms, can be described simply. If the jump size is high, carve times and number of carved files will decrease. If the jump size is low, carve times will increase and the number of carved files will increase. As discussed, this depends on the seek time of the disk holding the data to be analyzed. From the prior description, we propose that DECA is most beneficial when attempting to carve a small number of large files from a disk with a low seek time.
 
 From the description of DECA we propose the following hypotheses for testing:
 \begin{enumerate}
@@ -535,37 +537,48 @@ From the description of DECA we propose the following hypotheses for testing:
 	\item DECA is best suited for carving a small number of large files on a low-seek-time disk.
 \end{enumerate}
 
-Nine 4GB disk images were created to test these hypotheses. Disk images were created from the same 4GB USB thumb drive. To prepare the thumb drive for test-image creation, the thumb drive was zeroed out, a partition was created using 100\% of the free space and the partition was formatted with a FAT32 file system. JPEG images were randomly selected from the Digital Corpora Govdocs1 JPEG dataset {10.1016/j.diin.2009.06.016}. Test images have the following features:
+\subsection{Experiment 1}
+Two disk images were created for testing. One is based on a 4GB USB thumb drive, with a collection of JPEG images along with other documents stored in a FAT32 partition. The second is a 32GB image of a Windows XP operating system containing a user-created documents and JPEG images taken with various digital cameras.
 
-\begin{enumerate}
-	\item Case 1: Empty disk, no JPEG images
-	\item Case 2: Full disk, 100\% free space filled with JPEG images
-	\item Case 3: Total space divided into 32 sections; JPEG images taking up 1\% total space at the end of each section
-	\item Case 4: Total space divided into 16 sections; JPEG images taking up 1\% total space at the end of each section
-	\item Case 5: Total space divided into 8 sections; JPEG images taking up 1\% total space at the end of each section
-	\item Case 6: Total space divided into 4 sections; JPEG images taking up 1\% total space at the end of each section
-	\item Case 7: Total space divided into 2 sections; JPEG images taking up 1\% total space at the end of each section
-	\item Case 8: JPEG images taking up the first 5\% of the disk with the remaining space empty
-	\item Case 9: JPEG images taking up the last 5\% of the disk with the remaining space empty
-\end{enumerate}
+Along with DECA, other carvers tested with the same data sets include Photorec, Scalpel 1.60, Scalpel 2.1 and Foremost. Each of these carvers were configured to only search for JPEG images.
 
-The result of JPEG distribution for cases 2 through 7 is that empty-space gaps between clusters of JPEG images gradually become greater. The number of JPEG clusters reduces, but the size of the JPEG clusters remains the same.
+\subsection{Evaluation}
+To test hypothesis 1, each carver was used on the test data set while stored on an sold state drive (SSD) and hard disk drive (HDD). The 4GB image was also tested inside a RAMDisk. RAM cache was cleared before each run. Measurement of carving performance is based on sampling the number of carved files in the carver's output directory (contained on the same disk as the test image) every 0.25 seconds until the carver terminates. All raw test data and testing scripts can be found in the project repository given above.
 
-Each JPEG distribution case will be tested on a SATA hard disk drive (HDD), a solid state drive (SSD) and a RAMDisk on the same computer running Ubuntu Linux. All tests are scripted, and the same scripts will be used for each case and storage device combination. Before each test all cache will be cleared in the system to avoid cached-read speedup.
+To determine whether DECA had a reduction in run-time compared to linear carving, we compared the average speed increase over all linear carvers (including DECA in linear carving mode) to the average speed increase between DECA with 7 minimum-block-size configurations (default, 64, 200, 300, 600, 1200, 2400).
 
-The DECA algorithm will be compared against five carvers; Photorec, Scalpel 1.60, Scalpel 2.1, Foremost and DECA in linear-carving mode. The DECA algorithm will run with the following minimum jump-distance values; default, 64, 200, 300, 600, 1200, 2400.
+The average speed increase for linear carving from HDD to SSD was 237\%. The average speed increase for DECA carving from HDD to SSD was 553\%. The average speed increase for linear carving from SSD to RAMDisk was 327\%. The average speed increase for DECA carving from SSD to RAMDisk was 1229\%. Overall, the average speed increase for linear carving was 298\%, while the average speed increase for DECA carving was 891\%. As expected, when DECA had lower minimum file-size values (64 to 300), performance was equal to or below linear carving on disks with high seek times. Hypothesis 1 is found to be true in most cases except when DECA minimum-file-size is less than 600 on high seek-time disks. The disk seek-time will affect the level of minimum-file-size that should be used.
 
-To test carving speed, the carving output directory of each carver is sampled every 0.25 seconds and the number of carved files is counted. To test the accuracy of each carver, SHA1 hash values will be collected of JPEG images for each test case. SHA1 values will then be collected for each carving output directory. The original file counts and hash values will be compared, and carving accuracy rates will be calculated.
+%\begin{figure}
+%	\includegraphics[width=\textwidth]{figures/HDDsmall.png}
+%	\caption{DECA carving compared to popular linear carvers where the x-axis is the number of images carved; the y-axis is the number of samples in 0.25 increments; the length of the line is the total time of the carving process on a hard disk drive with a high seek-time. Here DECA carving has similar run times while the minimum-file-size is \textless 600.}
+%	\label{fig:HDDsmallAnalysis}
+%\end{figure}
+%
+%\begin{figure}
+%	\includegraphics[width=\textwidth]{figures/RAMDISKsmall.png}
+%	\caption{DECA carving compared to popular linear carvers where the x-axis is the number of images carved; the y-axis is the number of samples in 0.25 increments; the length of the line is the total time of the carving process on a RAMDisk drive with a low seek-time.}
+%	\label{fig:RAMDISKsmallAnalysis}
+%\end{figure}
 
-\subsection{Experimental Results}
+To test hypothesis 2 we calculated the average speed increase for linear carving and DECA carving from HDD to SSD. For the 4GB image, DECA performed 316\% over the linear carver average. For the 32GB image DECA performed 434\% over the linear carver average. Similar to before, if DECAs minimum-file-size was below 600, DECA performed at or below the linear carver average for the 32GB drive. As can be seen in Figure \ref{fig:4v32}, DECA saw greater performance increases from HDD to SSD with a larger disk image when minimum-file-size is greater than 600. This is explained by the cumulative effect of continually skipping large sections of the disk. 
 
+\begin{figure*}
+	\includegraphics[width=\textwidth]{figures/4GBv32GB.png}
+	\caption{DECA time performance improvements in percentage when comparing carving times on an HDD to carving times on an SSD. This graph shows that DECA performs better with larger disk images when minimum-file-size is greater than 600.}
+	\label{fig:4v32}
+\end{figure*}
 
-\subsection{Discussion}
-%The DECA algorithm worked as theorized, however, a practical implementation is likely more interesting to investigators. DECA produces significant carving speed increases under certain circumstances, but always at the cost to the number of files carved. Specifically, DECA is ideal for carving a small number of large files across a large, low-seek-time disk. For this reason, DECA may be appropriate for triage purposes, where very fast but incomplete image recovery is acceptable. In cases where the maximum number of files should be carved, or when carving high-seek-time devices (HDD), linear carving largely outperforms DECA.
+To test hypothesis 3 we counted the average number of files returned from each carving process. On the 4GB disk image, linear carving returned 356 files on average, and DECA carving returned 30 files on average (regardless of underlying disk). This is consistent with what was predicted since DECA is likely to skip small files and fragments that linear carving will find.
 
-%As discussed, DECA jumps to sections of the disk based on a calculated data distribution. DECA then checks for an image header or footer. If not found, then DECA attempts to classify the data as a JPEG or not. The classifier that was developed could likely be improved. This would increase the number of images correctly recovered, potentially at the cost of speed.
+To test hypothesis 4, we examine results of the largest tested DECA minimum-file-size. In our experiments, the largest minimum-file-size used was 2400, which tells DECA that a file is likely to be located within 1,200Kb of its current location. With this setting, DECA was 5 times faster than the linear carving average on an SSD, and 19 times faster than the linear carving average on a RAMDisk. However, DECA only recovered 2\% of the files recovered by linear carving. Overall, it appears that hypothesis 3 is also true. By expanding the minimum-file-size DECA accepts and using a disk with a lower seek-time, DECAs speed will dramatically increase at the expensive of smaller file recovery.
 
-%The current implementation of DECA focuses on JPEG images, while imagining current digital cameras that produce images greater than 1 megabyte. However, this algorithm may be suitable for other specific file types, such as music, video, zip files and email containers. This method could also be used in conjunction with other carving methods, such as in-place carving \citep{Richard2007inplace, MeijerRob2012}.
+\subsubsection{Discussion}
+The DECA algorithm worked as theorized, however, a practical implementation is likely more interesting to investigators. DECA produces significant carving speed increases under certain circumstances, but always at the cost to the number of files carved. Specifically, DECA is ideal for carving a small number of large files across a large, low-seek-time disk. For this reason, DECA may be appropriate for triage purposes, where very fast but incomplete image recovery is acceptable. In cases where the maximum number of files should be carved, or when carving high-seek-time devices (HDD), linear carving largely outperforms DECA.
+
+As discussed, DECA jumps to sections of the disk based on a calculated data distribution. DECA then checks for an image header or footer. If not found, then DECA attempts to classify the data as a JPEG or not. The classifier that was developed could likely be improved. This would increase the number of images correctly recovered, potentially at the cost of speed.
+
+The current implementation of DECA focuses on JPEG images, while imagining current digital cameras that produce images greater than 1 megabyte. However, this algorithm may be suitable for other specific file types, such as music, video, zip files and email containers. This method could also be used in conjunction with other carving methods, such as in-place carving \citep{Richard2007inplace, MeijerRob2012}.
 
 \section{Conclusions}
 Decision theoretic analysis allows a file carver to consider the most likely locations of relevant data based on what is currently known about the distribution of data on the disk. By skipping sections of the disk that are unlikely to contain relevant data, carving times can be greatly decreased, where speed benefits are cumulative as the disk becomes larger. Through a practical implementation we demonstrated that decision theoretic analysis is useful when carving a small number of files from a large, low-seek-time disk. With current storage disk technology, decision theoretic carving (DECA) is best implemented as a triage solution. For traditional carving needs, linear carving gives more comprehensive results, and on standard hard disk drives, also has similar carving speeds.

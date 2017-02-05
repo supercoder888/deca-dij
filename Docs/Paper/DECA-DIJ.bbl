@@ -4,9 +4,6 @@
   \def\url#1{\texttt{#1}}\fi
 \expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
 
-\bibitem[{gla(????)}]{gladyshevjames2015}
-, ???? Deca source code.
-
 \bibitem[{Casey et~al.(2009)Casey, Ferraro, and Nguyen}]{Casey2009}
 Casey, E., Ferraro, M., Nguyen, L., nov 2009. {Investigation Delayed Is Justice
   Denied: Proposals for Expediting Forensic Examinations of Digital Evidence*}.
@@ -20,6 +17,10 @@ Garfinkel, S.~L., 2007. Carving contiguous and fragmented files with fast
 Garfinkel, S.~L., McCarrin, M., aug 2015. {Hash-based carving: Searching media
   for complete files and file fragments with sector hashing and hashdb}.
   Digital Investigation 14, S95--S105.
+
+\bibitem[{Gladyshev and James(2016)}]{gladyshevjames2015}
+Gladyshev, P., James, J.~I., 2016. Deca source code.
+\newline\urlprefix\url{https://bitbucket.org/pavel\_gladyshev/deca-dij.git}
 
 \bibitem[{Grenier(2007)}]{grenier2007photorec}
 Grenier, C., 2007. Photorec.
