@@ -200,10 +200,7 @@ int deca_estimator_init(Deca_estimator *e,
 
        distblk=(long)(-(ajmp-alin)/(bjmp-blin));
 
-	   if (p->verbose > 0)
-	   {
-		   fprintf(p->o,"\nNumber of 512-byte sectors at which both processing techniques are equal: %ld\n\n",distblk);
-	   }
+	   fprintf(p->o,"\nNumber of 512-byte sectors at which both processing techniques are equal: %ld\n\n",distblk);
 
        free(buf);
        free(x);
