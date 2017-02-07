@@ -27,24 +27,26 @@ int deca_init(Deca *c,
 	DIR *tmp;
 
     /* Verify that output path is a writable directory */
-	if (outputPath == NULL) return DECA_OUTPUT_FOLDER_NOT_FOUND;
-	tmp=opendir(outputPath);
-	if (tmp == NULL) return DECA_OUTPUT_FOLDER_NOT_FOUND;
-	closedir(tmp);
-    if (access(outputPath,W_OK) != 0) return DECA_OUTPUT_FOLDER_NOT_WRITABLE;
-
-    /* store outputPath in a member variable */
-    c->outputPath = malloc(strlen(outputPath)+1);
-    strncpy(c->outputPath,outputPath,strlen(outputPath)+1);
-
+	if (!(eflags & DECA_ESTIMATOR_FLAG_FS))
+	{
+    	if (outputPath == NULL) return DECA_OUTPUT_FOLDER_NOT_FOUND;
+		tmp=opendir(outputPath);
+		if (tmp == NULL) return DECA_OUTPUT_FOLDER_NOT_FOUND;
+		closedir(tmp);
+    	if (access(outputPath,W_OK) != 0) return DECA_OUTPUT_FOLDER_NOT_WRITABLE;
+	
+    	/* store outputPath in a member variable */
+    	c->outputPath = malloc(strlen(outputPath)+1);
+    	strncpy(c->outputPath,outputPath,strlen(outputPath)+1);
+	}
     /* Record address of the given block device structure */
     c->b = bd;
 
     /* Initialize algorithm sub-modules */
-	result = deca_detector_init(&(c->d),modelfile); if(result != DECA_OK) return result;
 	result = deca_profiler_init(&(c->p),verbose,stat_output); if(result != DECA_OK) return result;
+	result = deca_detector_init(&(c->d),modelfile); if(result != DECA_OK) return result;
 	result = deca_estimator_init(&(c->e),eflags,bd,&(c->p),&(c->d),minsize); if(result != DECA_OK) return result;
-
+	
 	c->nextfileno = 0;
 	return DECA_OK;
 }

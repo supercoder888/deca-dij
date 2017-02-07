@@ -9,9 +9,9 @@
  *  probing and carving steps of Decision-theoretic file Carver (DeCa)
  */
 
-#include <magic.h>
-#include <linear.h>
-#include <libsvm/svm.h>
+//#include <magic.h>
+//#include <linear.h>
+//#include <libsvm/svm.h>
 #include <string.h>
 #include "deca.h"
 #include "detector.h"

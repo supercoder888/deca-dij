@@ -11,9 +11,9 @@
 
 #ifndef DETECTOR_H_
 #define DETECTOR_H_
-#include <magic.h>
-#include <linear.h>
-#include <libsvm/svm.h>
+//#include <magic.h>
+//#include <linear.h>
+//#include <libsvm/svm.h>
 
 /**
  * Deca_detector data structure. The user must create an instance of Deca_detector and
@@ -21,7 +21,7 @@
  */
 typedef struct deca_detector_struct
 {
-	magic_t cookie;
+	//magic_t cookie;
 #ifdef DECA_SVM_JPEG_DETECTION
 #ifdef DECA_LIBLINEAR
 	struct model *m;   // LIBLINEAR
