@@ -91,4 +91,9 @@ J.~Ousterhout, P.~Agrawal, D.~Erickson, C.~Kozyrakis, J.~Leverich,
 S.~L. Garfinkel, ``Carving contiguous and fragmented files with fast object
   validation,'' {\em digital investigation}, vol.~4, pp.~2--12, 2007.
 
+\bibitem{Garfinkel2009}
+S.~Garfinkel, P.~Farrell, V.~Roussev, and G.~Dinolt, ``{Bringing science to
+  digital forensics with standardized forensic corpora},'' {\em Digital
+  Investigation}, vol.~6, pp.~S2--S11, sep 2009.
+
 \end{thebibliography}

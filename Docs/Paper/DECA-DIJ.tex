@@ -7,6 +7,7 @@
 \usepackage{algorithm}
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}
+\usepackage{subfig}
 
 \algnewcommand\algorithmicinput{\textbf{INPUT:}}
 \algnewcommand\INPUT{\item[\algorithmicinput]}
@@ -309,7 +310,7 @@ We began our analysis by considering a very simple case: the drive contains sing
 
 Another case we considered is when the drive contains several non-fragmented files of the same size. Figure \ref{fig:fig-20blk-6min-6max3d} shows the results of the corresponding small scale simulation. In this example we reduced the fixed length of JPEG file down to 6 blocks, and our 20-block drive can now contain up to three such files. For the sake of clarity we added the third dimension to the plot: the total amount of JPEG data blocks stored on the drive. It allows us clearly see the probability $P(o=r|b_i)$ when the drive has either 1, 2 or 3 JPEG files stored on it. To better understand the shapes of these probability plots, the following flashlight analogy could be helpful: imagine an electric flashlight that takes three D-type batteries. A single battery can slide freely inside the flashlight. If we find a flashlight with a single battery inside laying on the floor, the exact position of the battery inside the case is somewhat uncertain to us, which corresponds to the first trapezoidal probability ``ridge'' in Figure \ref{fig:fig-20blk-6min-6max3d}. If, on the other hand, we know that all three batteries are in the flashlight, then we are quite certain where they are inside the flashlight. It corresponds to the last row of three probability ``ridges'' in \ref{fig:fig-20blk-6min-6max3d}, which are considerably higher than the first.
 
-Note also, that if we see someone else's flashlight on the floor and have no prior information about the number of batteries in it, we ought to assume all possibile battery configurations equally likely, and base our decision making on the probability plot that is the average of probability plots for all possible number of batteries inside.
+Note also, that if we see someone else's flashlight on the floor and have no prior information about the number of batteries in it, we ought to assume all possible battery configurations equally likely, and base our decision making on the probability plot that is the average of probability plots for all possible number of batteries inside.
 
 \begin{figure*}
   \centerline{\includegraphics[width=0.9\textwidth]{fig-20blk-6min-6max3d}}
@@ -384,7 +385,7 @@ The experimental data is quite noisy, which is probably due to RAM caching of th
 T_{rbt}(a)=\beta |a|+\gamma
 \end{equation}
 
-where $\beta$ and $\gamma$ can be estimated using linear regression of the experimental data. The resulting linear approximations are shown in Figures \ref{fig:seek_time_hdd} and \ref{fig:seek_time_ssd} as dashed lines. We observe that in both cases $T_{rbt}(a)$ has relatively large constant component($\gamma$) and very shallow slope ($\beta$). In SSD experiments $\beta$ is almost zero and $T_{rbt}(a)$ is essentially a constant over the entire range of seek offsets. In HDD experiments $T_{rbt}(a)$ clearly increases proportionally to the seek offset, but despite a pronounced visual appearance in Figure \ref{fig:seek_time_hdd}, the sloping angle of $T_{rbt}(a)$ is actually so shallow and that it can be ignored at short travel distances like the size of a large JPEG file (see footnote\footnote{According to the estimates shown in Figure \ref{fig:seek_time_hdd}, HDD seek time increases from around 15 ms for short jumps to aproximately 32 ms for jumps across the entire 120 Gb of the HDD. Most JPEGs are under 50Mb in size. At such small distances the increase of $T_{rbt}(a)$ would be only 0.007 ms or 0.0005\% of the constant 15 ms. Thus, for short jumps comparable to the size of JPEG file, we can assume $T_{rbt}(a)$ to be constant.} for explanation).
+where $\beta$ and $\gamma$ can be estimated using linear regression of the experimental data. The resulting linear approximations are shown in Figures \ref{fig:seek_time_hdd} and \ref{fig:seek_time_ssd} as dashed lines. We observe that in both cases $T_{rbt}(a)$ has relatively large constant component($\gamma$) and very shallow slope ($\beta$). In SSD experiments $\beta$ is almost zero and $T_{rbt}(a)$ is essentially a constant over the entire range of seek offsets. In HDD experiments $T_{rbt}(a)$ clearly increases proportionally to the seek offset, but despite a pronounced visual appearance in Figure \ref{fig:seek_time_hdd}, the sloping angle of $T_{rbt}(a)$ is actually so shallow and that it can be ignored at short travel distances like the size of a large JPEG file (see footnote\footnote{According to the estimates shown in Figure \ref{fig:seek_time_hdd}, HDD seek time increases from around 15 ms for short jumps to approximately 32 ms for jumps across the entire 120 Gb of the HDD. Most JPEGs are under 50Mb in size. At such small distances the increase of $T_{rbt}(a)$ would be only 0.007 ms or 0.0005\% of the constant 15 ms. Thus, for short jumps comparable to the size of JPEG file, we can assume $T_{rbt}(a)$ to be constant.} for explanation).
 
 Although random block access is important for decision-theoretic carving, we should not overlook properties of sequential block access on SSD and HDD. It is well known that both SSDs and HDDs are optimised for sequential block access, and it is much quicker to read 100 blocks sequentially rather than randomly. Suppose that our file carver needs to examine content of a block at a (positive) offset $a$ from the last examined block. This can be done either by a direct jump followed by the block processing or by reading and processing consecutive blocks up to and including the target block. To distinguish the two approaches we denote the time required to read and examine $a$ consecutive blocks sequentially as $T_{seq}(a)$.
 
@@ -520,59 +521,113 @@ Note that DECA does not revert immediately to the sampling mode after finding th
 \end{algorithm}
 
 \section{Implementation and Evaluation of DECA carver} \label{sec:implement}
-The previously described DECA algorithm was implemented using C++. We have provided repository containing the source code and test data \citep{gladyshevjames2015}. The software implementation defaults to linear carving mode. The software provides a function to sample a disk to determine its seek time. This allows an investigator to determine the jump distance at which DECA carving becomes faster than traditional linear carving. The software also has functions for carving using the DECA algorithm. An investigator can set the minimal sector jump distance in 512-sector increments. The following sections test the theorized performance of the DECA algorithm, and compare the algorithm to other file carvers commonly used in digital investigations.
+The previously described DECA algorithm was implemented using C++. A repository was created that contains the source code and test data \citep{gladyshevjames2015}. The software implementation defaults to linear carving mode. The software provides a function to sample a disk to determine its seek time. Sampling should be done on the physical disk containing the data top be carved. If the target is a disk image, then the physical disk storing the disk image should be sampled. Sampling seek times allows an investigator to determine the jump distance at which DECA carving becomes faster than traditional linear carving. The software also has functions for carving using the DECA algorithm. An investigator can set the minimal sector jump distance in 512-sector increments. The following sections test the theorized performance of the DECA algorithm, and compare the algorithm to other file carvers commonly used in digital investigations.
 
 \subsection{Experimentation Design}
 DECA is based on estimates of the distribution of JPEG data on a disk. Based on this estimation, DECA attempts to search only the most likely locations for related data. The result of the DECA algorithm is that some sectors will be skipped. In some cases, skipping sectors that are unlikely to contain relevant data may result in carving speed up. However, this method is also likely to miss smaller files depending on the jump distance.
 
-DECA, in practical terms, can be described simply; If the jump size is high, carve times and number of carved files will decrease. If the jump size is low, carve times will increase and the number of carved files will increase. As discussed, this depends on the seek time of the disk holding data to be analyzed. From the prior description, we propose that DECA is most beneficial when attempting to carve a small number of large files from a disk with a low seek time.
+DECA, in practical terms, can be described simply; If the jump size is high, carve times and number of carved files will decrease. If the jump size is low, carve times will increase and the number of carved files will increase. As discussed, this depends on the seek time of the disk holding data to be analyzed, and also the distribution of data to be carved. From the prior description, we hypothesize that DECA is most beneficial when attempting to carve a small number of large files from a disk with a low seek time. Further, DECA is least beneficial when attempting to carve files from a disk that is completely full with target data types (JPEG), regardless of disk seek time.
 
 From the description of DECA we propose the following hypotheses for testing:
 \begin{enumerate}
+    %\item DECA will have a more significant reduction in run-time compared to other carving methods based on the size of disk/image being analyzed.
 	\item DECA will have a more significant reduction in run-time as the seek time of the disk decreases compared to other carving methods.
-	\item DECA will have a more significant reduction in run-time compared to other carving methods based on the size of disk/image being analyzed.
 	\item DECA will normally find fewer files compared to linear carvers.
 	\item DECA is best suited for carving a small number of large files on a low-seek-time disk.
+	\item DECA will perform worse than linear carving on a disk that is completely filled with target data.
 \end{enumerate}
 
-Nine 4GB disk images were created to test these hypotheses. Disk images were created from the same 4GB USB thumb drive. To prepare the thumb drive for test-image creation, the thumb drive was zeroed out, a partition was created using 100\% of the free space and the partition was formatted with a FAT32 file system. JPEG images were randomly selected from the Digital Corpora Govdocs1 JPEG dataset {10.1016/j.diin.2009.06.016}. Test images have the following features:
+Nine 4GB disk images were created to test these hypotheses. Disk images were created from the same 4GB USB thumb drive. To prepare the thumb drive for test-image creation, the thumb drive was zeroed out, a partition was created using 100\% of the free space and the partition was formatted with a FAT32 file system. JPEG images were randomly selected from the Digital Corpora Govdocs1 JPEG dataset described in \cite{Garfinkel2009}. Test images have the following features:
 
-\begin{enumerate}
-	\item Case 1: Empty disk, no JPEG images
-	\item Case 2: Full disk, 100\% free space filled with JPEG images
-	\item Case 3: Total space divided into 32 sections; JPEG images taking up 1\% total space at the end of each section
-	\item Case 4: Total space divided into 16 sections; JPEG images taking up 1\% total space at the end of each section
-	\item Case 5: Total space divided into 8 sections; JPEG images taking up 1\% total space at the end of each section
-	\item Case 6: Total space divided into 4 sections; JPEG images taking up 1\% total space at the end of each section
-	\item Case 7: Total space divided into 2 sections; JPEG images taking up 1\% total space at the end of each section
-	\item Case 8: JPEG images taking up the first 5\% of the disk with the remaining space empty
-	\item Case 9: JPEG images taking up the last 5\% of the disk with the remaining space empty
+\begin{enumerate}[\textnormal{Case} 1:]
+	\item Empty disk, no JPEG images
+	\item Full disk, 100\% free space filled with JPEG images
+	\item Total space divided into 32 sections; JPEG images taking up 1\% total space at the end of each section
+	\item Total space divided into 16 sections; JPEG images taking up 1\% total space at the end of each section
+	\item Total space divided into 8 sections; JPEG images taking up 1\% total space at the end of each section
+	\item Total space divided into 4 sections; JPEG images taking up 1\% total space at the end of each section
+	\item Total space divided into 2 sections; JPEG images taking up 1\% total space at the end of each section
+	\item JPEG images taking up the first 5\% of the disk with the remaining space empty
+	\item JPEG images taking up the last 5\% of the disk with the remaining space empty
 \end{enumerate}
 
-The result of JPEG distribution for cases 2 through 7 is that empty-space gaps between clusters of JPEG images gradually become greater. The number of JPEG clusters reduces, but the size of the JPEG clusters remains the same.
+The result of JPEG distribution for cases 2 through 7 is that empty-space gaps between clusters of JPEG images gradually become greater. The \emph{number} of JPEG clusters reduces, but the \emph{size} of the JPEG clusters remains the same.
 
-Each JPEG distribution case will be tested on a SATA hard disk drive (HDD), a solid state drive (SSD) and a RAMDisk on the same computer running Ubuntu Linux. All tests are scripted, and the same scripts will be used for each case and storage device combination. Before each test all cache will be cleared in the system to avoid cached-read speedup.
+Each JPEG distribution case will be tested on a SATA hard disk drive (HDD), a solid state drive (SSD) and a RAMDisk on the same computer running Ubuntu Linux. All tests are scripted, and the same scripts will be used for each test case and storage device combination. Before each test all cache will be cleared in the system to avoid cached-related speedup.
 
 The DECA algorithm will be compared against five carvers; Photorec, Scalpel 1.60, Scalpel 2.1, Foremost and DECA in linear-carving mode. The DECA algorithm will run with the following minimum jump-distance values; default, 64, 200, 300, 600, 1200, 2400.
 
-To test carving speed, the carving output directory of each carver is sampled every 0.25 seconds and the number of carved files is counted. To test the accuracy of each carver, SHA1 hash values will be collected of JPEG images for each test case. SHA1 values will then be collected for each carving output directory. The original file counts and hash values will be compared, and carving accuracy rates will be calculated.
+To test carving speed, the carving output directory of each carver is sampled every 0.25 seconds and the number of carved files is counted. To test the accuracy of each carver, SHA1 hash of values all JPEG images will be collected for each test case disk image. SHA1 values will then be collected for each carving output directory. The original file counts and hash values will be compared, and carving accuracy rates will be calculated.
 
 \subsection{Experimental Results}
+The full experimental results can be found in the DECA repository \cite{gladyshevjames2015}. In this section we focus on specific cases for brevity. Specifically, the expected best-case and worst case for DECA algorithm. The worst-case can be seen in Figure \ref{fig:worstCase}. Figure \ref{fig:worstCase}(a) each carver is shown by the number of images that have been output per 0.25 second interval. Notice that DECA with each minimal sector skip level still looks similar to traditional linear carvers. The reason for this is that JPEG data exists in every sector of the disk image. DECA will skip to the expected next sector, detect JPEG data and then backtrack to the start of the data structure. If JPEG data exists in each sector, the result is similar to linear carving with an added jump phase. The two nearly vertical lines are Scalpel 1.60 and Scalpel 2.1. On a hard disk drive full of images, Scalpel 2.1 was much faster, and produced more output. The accuracy of all output will be discussed shortly.
 
+\begin{figure}%
+	\centering
+	\subfloat[Hard disk drive]{{\includegraphics[width=\linewidth]{figures/wchdd.png} }}%
+	\qquad
+	\subfloat[Solid state drive]{{\includegraphics[width=\linewidth]{figures/wcssd.png} }}%
+	\qquad
+	\subfloat[RAMdisk]{{\includegraphics[width=\linewidth]{figures/wcram.png} }}%
+	
+	\caption{DECA Worst Case (case 2) where the disk is 100\% full of JPEG images. (a) shows carving speed on a hard disk drive (b) shows carving speed on a sold state drive (c) shows carving speed on a RAMdisk. The x-axis represents time in 0.25 second increments. The y-axis represents the number of files carved.}
+	\label{fig:worstCase}
+	
+\end{figure}
+
+Looking at Figure \ref{fig:worstCase}(b) and (c) DECA continues to preform similar to linear carvers but DECA's carving time decreases at a greater rate depending on storage device seek time than other carvers. On a hard disk drive, the carving time is similar, or worse, than linear carvers and the amout of overall images carved is less than linear carvers. On a solid state drive the carving time is similar to linear carvers, and the amount of overall images carved is less than linear carvers. On a RAMdisk the carving time is less than linear carvers and the amount of overall images carved is less than linear carvers.This is specific to Case 2, were JPEG data is on each sector of the disk image.
+
+The hypothesised best case for the DECA algorithm is when there is a cluster of (large) JPEG images in a single spot on a disk with a low seek time. Figure \ref{fig:bestCase} shows carve-time graphs for Case 7; where a JPEG image cluster is at the center of the disk only. Figure \ref{fig:bestCase}(c) shows what should be the best case for DECA. In this graph, all DECA carving finished before the sample interval (0.25 seconds) with similar carving output results to linear carvers. DECA linear was next, likely due to JPEG carving optimization. In Figure \ref{fig:bestCase}(a) DECA carving on a HDD does not see drastic improvements over other carvers. SSD (Fig. \ref{fig:bestCase}(b)) is where DECA carving starts to see significant speed up.
+
+\begin{figure}%
+	\centering
+	\subfloat[Hard disk drive]{{\includegraphics[width=\linewidth]{figures/bchdd.png} }}%
+	\qquad
+	\subfloat[Solid state drive]{{\includegraphics[width=\linewidth]{figures/bcssd.png} }}%
+	\qquad
+	\subfloat[RAMdisk]{{\includegraphics[width=\linewidth]{figures/bcram.png} }}%
+	
+	\caption{DECA Best Case (case 7) where there are a small number of JPEG images on a mostly-empty disk. (a) shows carving speed on a hard disk drive (b) shows carving speed on a sold state drive (c) shows carving speed on a RAMdisk. The x-axis represents time in 0.25 second increments. The y-axis represents the number of files carved.}
+	\label{fig:bestCase}
+	
+\end{figure}
+
+\subsubsection{Accuracy Rates}
+Carver speeds mean very little if the data that is carved is not accurate. To measure the accuracy of each carver, hashes of all original files were collected. After carving, hashes were taken of each carved file. These hashes were compared with the original hash data. A summary of the results are as follows (full data can be found in the repository):
+
+The underlying storage media did \emph{not} have an effect on what data was carved. Each carver produced exactly the same results on each test image per storage medium.
+
+For all test cases, the average true-positives detected was 34\%, with a max of 50\% and min of 12\%. The average false-positives detected was 11\%. No tool correctly recovered 100\% of the allocated images. Consider that the true-positive measurement is based on hash values. False-positives may have correct data that was only slightly modified in some way.
+
+For each case, Foremost and Photorec recovered approximately 10\% more true positive images than DECA. Setting DECA min-sector-skip values had at most a 1\% difference in recovery success. DECA and both Scalpel versions had nearly identical true-positive rates. Scalpel, however, had consistently higher false-positive rates than all other tools. As we saw before, Scalpel consistently produced more carved output, but this extra data may only be partially recovered.
 
 \subsection{Discussion}
-%The DECA algorithm worked as theorized, however, a practical implementation is likely more interesting to investigators. DECA produces significant carving speed increases under certain circumstances, but always at the cost to the number of files carved. Specifically, DECA is ideal for carving a small number of large files across a large, low-seek-time disk. For this reason, DECA may be appropriate for triage purposes, where very fast but incomplete image recovery is acceptable. In cases where the maximum number of files should be carved, or when carving high-seek-time devices (HDD), linear carving largely outperforms DECA.
+Based on the experimental results, support was found for our hypotheses. First, support was given for the hypothesis that DECA would have a more significant reduction in carve time as the seek time of the storage device decreases. This is illustrated in Figures \ref{fig:worstCase} and \ref{fig:bestCase}, where speed increases for DECA are more significant than for other carvers as the storage device seek-time reduces.
 
-%As discussed, DECA jumps to sections of the disk based on a calculated data distribution. DECA then checks for an image header or footer. If not found, then DECA attempts to classify the data as a JPEG or not. The classifier that was developed could likely be improved. This would increase the number of images correctly recovered, potentially at the cost of speed.
+Next, the claim that DECA will normally find fewer files compared to linear carvers appears to be generally true. In terms of total files recovered, DECA normally recovers about 1\% fewer files. In terms of true-positive files, DECA recovers approximately 10\% fewer files on average.
 
-%The current implementation of DECA focuses on JPEG images, while imagining current digital cameras that produce images greater than 1 megabyte. However, this algorithm may be suitable for other specific file types, such as music, video, zip files and email containers. This method could also be used in conjunction with other carving methods, such as in-place carving \citep{Richard2007inplace, MeijerRob2012}.
+
+The claim that DECA is best suited for carving a small number of large files on a low-seek-time disk also appears to be supported. With Case 7 on a RAMdisk as an example, DECA carving was approximately 20 times faster than Foremost, 50 times faster than Scalpel and 100 times faster than Photorec. Alternatively, Case 2 on a HDD showed that Scalpel was about 40\% faster than DECA when a disk has a high seek-time and is full of images. There are some cases, where DECA is still more efficient, even on high-seek-time disks. For example, Case 9 (Figure \ref{fig:last5hdd}) shows that DECA can be faster on high-seek-time disks if there is a large amount of empty space. DECA would gain speed advantages with even larger disks.
+
+\begin{figure}
+	\centerline{\includegraphics[width=0.9\linewidth]{figures/last5hdd.png}}
+	\caption{Carve speeds and amount of recovered files when all JPEG images are in the last 5\% of the disk image stored on a HDD}
+	\label{fig:last5hdd}
+\end{figure}
+
+Finally, it appears to be true that DECA will perform worse than linear carving on a HDD that is completely filled with target data. In the case of a SSD DECA is comparable to linear carvers. In the case of a RAMdisk, DECA still appears to be faster. However, this could be because DECA is optimized for JPEG carving, where other carvers support many types of data and only JPEG carving was enabled. If DECA supported other data structures, the speed of carving would probably be reduced. An optimization bias can be seen by observing DECA in linear carving mode. In many instances, DECA linear performs much better than other linear carvers, likely for the same reason.
+
+Based on the algorithm design, the authors were expecting carving speedup relative to the underlying disk seek-time. However, we did not expect DECA to have true-positive rates within a 10\% range of linear carvers. A DECA min-sector-jump of 2400, did not have a large effect on true-positive detection rates, but did improve carving times. We believe the true-positive rates of DECA with other carvers is comparable because randomly-selected data from Govdocs1 JPEG data were relatively large. This also shows that an investigator could increase the jump distance further to speed up carving while reducing accuracy. In the case of triage, an investigator may be interested in finding a small number of relevant images as quickly as possible. It appears that DECA would be suitable for such tasks if the underlying storage media is either a SSD or a RAMdisk.
+
+Due to space limitations, other test cases were not discussed. These cases showed gradual improvements in DECA carving speed as the empty-space gaps increased. We also found some situations that particular linear carvers perform better or worse in. See the provided data repository for more information.
+
+The current implementation of DECA focuses on JPEG images. However, this algorithm may be suitable for other specific file types, such as music, video, zip files and email containers. This method could also be used in conjunction with other carving methods, such as in-place carving \citep{Richard2007inplace, MeijerRob2012}.
 
 \section{Conclusions}
-Decision theoretic analysis allows a file carver to consider the most likely locations of relevant data based on what is currently known about the distribution of data on the disk. By skipping sections of the disk that are unlikely to contain relevant data, carving times can be greatly decreased, where speed benefits are cumulative as the disk becomes larger. Through a practical implementation we demonstrated that decision theoretic analysis is useful when carving a small number of files from a large, low-seek-time disk. With current storage disk technology, decision theoretic carving (DECA) is best implemented as a triage solution. For traditional carving needs, linear carving gives more comprehensive results, and on standard hard disk drives, also has similar carving speeds.
+Decision theoretic analysis allows a file carver to consider the most likely locations of relevant data based on what is currently known about the distribution of data on the disk. By skipping sections of the disk that are unlikely to contain relevant data, carving times can be greatly decreased, where speed benefits are cumulative as the disk becomes larger. Through a practical implementation we demonstrated that decision theoretic analysis is useful when carving a small number of files from a large, low-seek-time disk. With current storage disk technology, decision theoretic carving (DECA) is best implemented as a triage solution. For traditional carving needs, linear carving can give more comprehensive results, and  -- on standard hard disk drives -- also has similar carving speeds.
 
 \subsection{Future Work}
-This work is a first effort to propose decision theoretic analysis applied to file carving. There are currently a number of limitations to the practical implementation (DECA) carver. Specifically, file distribution has been pre-calculated based on surveyed data in other drives. Future work will attempt to find a method for calculating a data distribution on the disk to be analyzed without increasing carving time significantly. Next, as DECA jumps to a location on the disk it must detect whether the data stored in that location is relevant. We have attempted several detection methods, most of which significantly increased the overall run time. We will seek to improve the data classifier that DECA uses. 
-
+This work is a first effort to propose decision theoretic analysis applied to file carving. There are currently a number of limitations to the practical implementation (DECA) carver. Specifically, the file distribution used in this work was pre-calculated based on surveyed data in other drives. Future work will attempt to find a method for calculating a data distribution on the disk to be analyzed without increasing carving time significantly. Next, as DECA jumps to a location on the disk it must detect whether the data stored in that location is relevant. We have attempted several detection methods, most of which significantly increased the overall run time. We will seek to improve the data classifier that DECA uses. 
 
 
 
