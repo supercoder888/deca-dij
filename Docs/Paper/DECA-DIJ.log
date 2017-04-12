@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.12.31)  7 FEB 2017 18:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.12.31)  12 APR 2017 14:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -740,199 +740,215 @@ e
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Try loading font information for U+txmia on input line 52.
+LaTeX Font Info:    Try loading font information for U+txmia on input line 54.
 (/usr/share/texlive/texmf-dist/tex/latex/txfonts/utxmia.fd
 File: utxmia.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 52.
+LaTeX Font Info:    Try loading font information for U+msa on input line 54.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 52.
+LaTeX Font Info:    Try loading font information for U+msb on input line 54.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+txsyc on input line 52.
+LaTeX Font Info:    Try loading font information for U+txsyc on input line 54.
 
 (/usr/share/texlive/texmf-dist/tex/latex/txfonts/utxsyc.fd
 File: utxsyc.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    Try loading font information for OMS+txr on input line 67.
+LaTeX Font Info:    Try loading font information for OMS+txr on input line 69.
 
 (/usr/share/texlive/texmf-dist/tex/latex/txfonts/omstxr.fd
 File: omstxr.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Font shape `OMS/txr/m/n' in size <10> not available
-(Font)              Font shape `OMS/txsy/m/n' tried instead on input line 67.
+(Font)              Font shape `OMS/txsy/m/n' tried instead on input line 69.
  [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
-] <fig3.png, id=14, 628.3475pt x 355.3275pt>
-File: fig3.png Graphic file (type png)
-
-<use fig3.png>
-Package pdftex.def Info: fig3.png used on input line 89.
+]
+<figures/fig3.png, id=14, 628.3475pt x 355.3275pt>
+File: figures/fig3.png Graphic file (type png)
+ <use figures/fig3.png>
+Package pdftex.def Info: figures/fig3.png used on input line 91.
 (pdftex.def)             Requested size: 313.20319pt x 177.11028pt.
- [2] <wc_fig.png, id=22, 578.16pt x 433.62pt>
-File: wc_fig.png Graphic file (type png)
- <use wc_fig.png>
-Package pdftex.def Info: wc_fig.png used on input line 169.
+
+[2] <figures/wc_fig.png, id=22, 578.16pt x 433.62pt>
+File: figures/wc_fig.png Graphic file (type png)
+ <use figures/wc_fig.png>
+Package pdftex.def Info: figures/wc_fig.png used on input line 171.
 (pdftex.def)             Requested size: 469.79681pt x 352.34846pt.
 
-[3 <./fig3.png>] [4 <./wc_fig.png>]
-<jpeg-sizes.png, id=31, 578.16pt x 433.62pt>
-File: jpeg-sizes.png Graphic file (type png)
- <use jpeg-sizes.png>
-Package pdftex.def Info: jpeg-sizes.png used on input line 202.
-(pdftex.def)             Requested size: 469.79681pt x 352.34846pt.
- [5] [6 <./jpeg-sizes.png>] <fig-20blk-11min-11max2d.png, id=39, 578.16pt x 433
-.62pt>
-File: fig-20blk-11min-11max2d.png Graphic file (type png)
+[3 <./figures/fig3.png>] [4 <./figures/wc_fig.png>]
+<figures/jpeg-sizes.png, id=31, 578.16pt x 433.62pt>
+File: figures/jpeg-sizes.png Graphic file (type png)
 
-<use fig-20blk-11min-11max2d.png>
-Package pdftex.def Info: fig-20blk-11min-11max2d.png used on input line 300.
+<use figures/jpeg-sizes.png>
+Package pdftex.def Info: figures/jpeg-sizes.png used on input line 204.
+(pdftex.def)             Requested size: 469.79681pt x 352.34846pt.
+ [5] [6 <./figures/jpeg-sizes.png>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+<figures/fig-20blk-11min-11max2d.png, id=39, 578.16pt x 433.62pt>
+File: figures/fig-20blk-11min-11max2d.png Graphic file (type png)
+
+<use figures/fig-20blk-11min-11max2d.png>
+Package pdftex.def Info: figures/fig-20blk-11min-11max2d.png used on input line
+ 302.
 (pdftex.def)             Requested size: 469.79681pt x 352.34846pt.
 
-<pa_explain.pdf, id=40, 919.435pt x 563.10374pt>
-File: pa_explain.pdf Graphic file (type pdf)
- <use pa_explain.pdf>
-Package pdftex.def Info: pa_explain.pdf used on input line 306.
+<figures/pa_explain.pdf, id=40, 919.435pt x 563.10374pt>
+File: figures/pa_explain.pdf Graphic file (type pdf)
+
+<use figures/pa_explain.pdf>
+Package pdftex.def Info: figures/pa_explain.pdf used on input line 308.
 (pdftex.def)             Requested size: 522.0pt x 319.70941pt.
 
-<fig-20blk-6min-6max3d.png, id=41, 578.16pt x 433.62pt>
-File: fig-20blk-6min-6max3d.png Graphic file (type png)
+<figures/fig-20blk-6min-6max3d.png, id=41, 578.16pt x 433.62pt>
+File: figures/fig-20blk-6min-6max3d.png Graphic file (type png)
 
-<use fig-20blk-6min-6max3d.png>
-Package pdftex.def Info: fig-20blk-6min-6max3d.png used on input line 316.
+<use figures/fig-20blk-6min-6max3d.png>
+Package pdftex.def Info: figures/fig-20blk-6min-6max3d.png used on input line 3
+18.
+(pdftex.def)             Requested size: 469.79681pt x 352.34846pt.
+ [7] [8 <./figures/fig-20blk-11min-11max2d.png>] <figures/fig-20blk-6min-20max3
+d.png, id=50, 578.16pt x 433.62pt>
+File: figures/fig-20blk-6min-20max3d.png Graphic file (type png)
+
+<use figures/fig-20blk-6min-20max3d.png>
+Package pdftex.def Info: figures/fig-20blk-6min-20max3d.png used on input line 
+326.
 (pdftex.def)             Requested size: 469.79681pt x 352.34846pt.
 
-<fig-20blk-6min-20max3d.png, id=42, 578.16pt x 433.62pt>
-File: fig-20blk-6min-20max3d.png Graphic file (type png)
+<figures/fig-20blk-6min-20max2d.png, id=51, 578.16pt x 433.62pt>
+File: figures/fig-20blk-6min-20max2d.png Graphic file (type png)
 
-<use fig-20blk-6min-20max3d.png>
-Package pdftex.def Info: fig-20blk-6min-20max3d.png used on input line 324.
+<use figures/fig-20blk-6min-20max2d.png>
+Package pdftex.def Info: figures/fig-20blk-6min-20max2d.png used on input line 
+332.
 (pdftex.def)             Requested size: 469.79681pt x 352.34846pt.
 
-<fig-20blk-6min-20max2d.png, id=43, 578.16pt x 433.62pt>
-File: fig-20blk-6min-20max2d.png Graphic file (type png)
+<figures/fig-20blk-6min-20max-testloc-5-0-2d.png, id=52, 578.16pt x 433.62pt>
+File: figures/fig-20blk-6min-20max-testloc-5-0-2d.png Graphic file (type png)
 
-<use fig-20blk-6min-20max2d.png>
-Package pdftex.def Info: fig-20blk-6min-20max2d.png used on input line 330.
-(pdftex.def)             Requested size: 469.79681pt x 352.34846pt.
- [7] [8 <./fig-20blk-11min-11max2d.png>]
-<fig-20blk-6min-20max-testloc-5-0-2d.png, id=52, 578.16pt x 433.62pt>
-File: fig-20blk-6min-20max-testloc-5-0-2d.png Graphic file (type png)
-
-<use fig-20blk-6min-20max-testloc-5-0-2d.png>
-Package pdftex.def Info: fig-20blk-6min-20max-testloc-5-0-2d.png used on input 
-line 344.
+<use figures/fig-20blk-6min-20max-testloc-5-0-2d.png>
+Package pdftex.def Info: figures/fig-20blk-6min-20max-testloc-5-0-2d.png used o
+n input line 346.
 (pdftex.def)             Requested size: 469.79681pt x 352.34846pt.
 
-<fig-20blk-6min-20max-testloc-5-1-2d.png, id=53, 578.16pt x 433.62pt>
-File: fig-20blk-6min-20max-testloc-5-1-2d.png Graphic file (type png)
+<figures/fig-20blk-6min-20max-testloc-5-1-2d.png, id=53, 578.16pt x 433.62pt>
+File: figures/fig-20blk-6min-20max-testloc-5-1-2d.png Graphic file (type png)
 
-<use fig-20blk-6min-20max-testloc-5-1-2d.png>
-Package pdftex.def Info: fig-20blk-6min-20max-testloc-5-1-2d.png used on input 
-line 356.
+<use figures/fig-20blk-6min-20max-testloc-5-1-2d.png>
+Package pdftex.def Info: figures/fig-20blk-6min-20max-testloc-5-1-2d.png used o
+n input line 358.
 (pdftex.def)             Requested size: 469.79681pt x 352.34846pt.
- [9 <./pa_explain.pdf>] [10 <./fig-20blk-6min-6max3d.png>] [11 <./fig-20blk-6mi
-n-20max3d.png>] [12 <./fig-20blk-6min-20max2d.png>] [13 <./fig-20blk-6min-20max
--testloc-5-0-2d.png>] [14 <./fig-20blk-6min-20max-testloc-5-1-2d.png>]
-<seek-time-hdd.png, id=150, 578.16pt x 433.62pt>
-File: seek-time-hdd.png Graphic file (type png)
- <use seek-time-hdd.png>
-Package pdftex.def Info: seek-time-hdd.png used on input line 371.
-(pdftex.def)             Requested size: 469.79681pt x 352.34846pt.
+ [9 <./figures/pa_explain.pdf>] [10 <./figures/fig-20blk-6min-6max3d.png>] [11 
+<./figures/fig-20blk-6min-20max3d.png>] [12 <./figures/fig-20blk-6min-20max2d.p
+ng>] [13 <./figures/fig-20blk-6min-20max-testloc-5-0-2d.png>] [14 <./figures/fi
+g-20blk-6min-20max-testloc-5-1-2d.png>] <figures/seek-time-hdd.png, id=150, 578
+.16pt x 433.62pt>
+File: figures/seek-time-hdd.png Graphic file (type png)
 
-<seek-time-ssd.png, id=151, 578.16pt x 433.62pt>
-File: seek-time-ssd.png Graphic file (type png)
- <use seek-time-ssd.png>
-Package pdftex.def Info: seek-time-ssd.png used on input line 377.
+<use figures/seek-time-hdd.png>
+Package pdftex.def Info: figures/seek-time-hdd.png used on input line 373.
 (pdftex.def)             Requested size: 469.79681pt x 352.34846pt.
 
-<processing-time-ssd.png, id=152, 578.16pt x 433.62pt>
-File: processing-time-ssd.png Graphic file (type png)
+<figures/seek-time-ssd.png, id=151, 578.16pt x 433.62pt>
+File: figures/seek-time-ssd.png Graphic file (type png)
 
-<use processing-time-ssd.png>
-Package pdftex.def Info: processing-time-ssd.png used on input line 395.
+<use figures/seek-time-ssd.png>
+Package pdftex.def Info: figures/seek-time-ssd.png used on input line 379.
 (pdftex.def)             Requested size: 469.79681pt x 352.34846pt.
 
-<processing-time-hdd.png, id=153, 578.16pt x 433.62pt>
-File: processing-time-hdd.png Graphic file (type png)
+<figures/processing-time-ssd.png, id=152, 578.16pt x 433.62pt>
+File: figures/processing-time-ssd.png Graphic file (type png)
 
-<use processing-time-hdd.png>
-Package pdftex.def Info: processing-time-hdd.png used on input line 401.
+<use figures/processing-time-ssd.png>
+Package pdftex.def Info: figures/processing-time-ssd.png used on input line 397
+.
 (pdftex.def)             Requested size: 469.79681pt x 352.34846pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 414--414
+<figures/processing-time-hdd.png, id=153, 578.16pt x 433.62pt>
+File: figures/processing-time-hdd.png Graphic file (type png)
+
+<use figures/processing-time-hdd.png>
+Package pdftex.def Info: figures/processing-time-hdd.png used on input line 403
+.
+(pdftex.def)             Requested size: 469.79681pt x 352.34846pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 416--416
 []\OT1/txr/bx/n/10 Designing new carv-ing strat-egy for large, non-
  []
 
-[15] [16 <./seek-time-hdd.png>] [17 <./seek-time-ssd.png>] [18 <./processing-ti
-me-ssd.png>] [19 <./processing-time-hdd.png>] [20] [21]
-<figures/wchdd.png, id=180, 712.6625pt x 440.64626pt>
+[15] [16 <./figures/seek-time-hdd.png>] [17 <./figures/seek-time-ssd.png>]
+[18 <./figures/processing-time-ssd.png>] [19 <./figures/processing-time-hdd.png
+>] [20] [21] <figures/wchdd.png, id=180, 712.6625pt x 440.64626pt>
 File: figures/wchdd.png Graphic file (type png)
- <use figures/wchdd.png>
-Package pdftex.def Info: figures/wchdd.png used on input line 567.
-(pdftex.def)             Requested size: 252.0pt x 155.80856pt.
 
-<figures/wcssd.png, id=181, 733.74126pt x 453.695pt>
+<use figures/wchdd.png>
+Package pdftex.def Info: figures/wchdd.png used on input line 569.
+(pdftex.def)             Requested size: 252.0pt x 155.80856pt.
+ <figures/wcssd.png, id=181, 733.74126pt x 453.695pt>
 File: figures/wcssd.png Graphic file (type png)
- <use figures/wcssd.png>
-Package pdftex.def Info: figures/wcssd.png used on input line 569.
-(pdftex.def)             Requested size: 252.0pt x 155.81882pt.
 
-<figures/wcram.png, id=182, 712.6625pt x 440.64626pt>
+<use figures/wcssd.png>
+Package pdftex.def Info: figures/wcssd.png used on input line 571.
+(pdftex.def)             Requested size: 252.0pt x 155.81882pt.
+ <figures/wcram.png, id=182, 712.6625pt x 440.64626pt>
 File: figures/wcram.png Graphic file (type png)
- <use figures/wcram.png>
-Package pdftex.def Info: figures/wcram.png used on input line 571.
+
+<use figures/wcram.png>
+Package pdftex.def Info: figures/wcram.png used on input line 573.
 (pdftex.def)             Requested size: 252.0pt x 155.80856pt.
 
-Overfull \hbox (2.5pt too wide) in paragraph at lines 567--572
+Overfull \hbox (2.5pt too wide) in paragraph at lines 569--574
  [][] 
  []
 
 
-Overfull \hbox (2.5pt too wide) in paragraph at lines 567--572
+Overfull \hbox (2.5pt too wide) in paragraph at lines 569--574
  [] 
  []
 
 
-Overfull \hbox (2.5pt too wide) in paragraph at lines 567--572
+Overfull \hbox (2.5pt too wide) in paragraph at lines 569--574
  [] 
  []
 
 <figures/bchdd.png, id=183, 712.6625pt x 440.64626pt>
 File: figures/bchdd.png Graphic file (type png)
  <use figures/bchdd.png>
-Package pdftex.def Info: figures/bchdd.png used on input line 584.
+Package pdftex.def Info: figures/bchdd.png used on input line 586.
 (pdftex.def)             Requested size: 252.0pt x 155.80856pt.
 
 <figures/bcssd.png, id=184, 705.63625pt x 435.6275pt>
 File: figures/bcssd.png Graphic file (type png)
  <use figures/bcssd.png>
-Package pdftex.def Info: figures/bcssd.png used on input line 586.
+Package pdftex.def Info: figures/bcssd.png used on input line 588.
 (pdftex.def)             Requested size: 252.0pt x 155.56947pt.
 
 <figures/bcram.png, id=185, 777.90625pt x 480.79625pt>
 File: figures/bcram.png Graphic file (type png)
  <use figures/bcram.png>
-Package pdftex.def Info: figures/bcram.png used on input line 588.
+Package pdftex.def Info: figures/bcram.png used on input line 590.
 (pdftex.def)             Requested size: 252.0pt x 155.75072pt.
 
-Overfull \hbox (2.5pt too wide) in paragraph at lines 584--589
+Overfull \hbox (2.5pt too wide) in paragraph at lines 586--591
  [][] 
  []
 
 
-Overfull \hbox (2.5pt too wide) in paragraph at lines 584--589
+Overfull \hbox (2.5pt too wide) in paragraph at lines 586--591
  [] 
  []
 
 
-Overfull \hbox (2.5pt too wide) in paragraph at lines 584--589
+Overfull \hbox (2.5pt too wide) in paragraph at lines 586--591
  [] 
  []
 
@@ -941,7 +957,7 @@ Overfull \hbox (2.5pt too wide) in paragraph at lines 584--589
 File: figures/last5hdd.png Graphic file (type png)
 
 <use figures/last5hdd.png>
-Package pdftex.def Info: figures/last5hdd.png used on input line 613.
+Package pdftex.def Info: figures/last5hdd.png used on input line 615.
 (pdftex.def)             Requested size: 226.79846pt x 140.23555pt.
  [23 <./figures/bchdd.png> <./figures/bcssd.png> <./figures/bcram.png> <./figur
 es/last5hdd.png>] (./DECA-DIJ.bbl
@@ -955,10 +971,10 @@ Missing character: There is no € in font txr!
 Missing character: There is no ” in font txr!
 ) [24] (./DECA-DIJ.aux) ) 
 Here is how much of TeX's memory you used:
- 7233 strings out of 494953
- 104519 string characters out of 6180976
- 183244 words of memory out of 5000000
- 10330 multiletter control sequences out of 15000+600000
+ 7234 strings out of 494953
+ 104973 string characters out of 6180976
+ 183312 words of memory out of 5000000
+ 10331 multiletter control sequences out of 15000+600000
  48534 words of font info for 122 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  44i,9n,49p,1405b,358s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -974,7 +990,7 @@ s/txsy.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texliv
 e/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/urw/times/utmri8a.pfb>
-Output written on DECA-DIJ.pdf (24 pages, 1287427 bytes).
+Output written on DECA-DIJ.pdf (24 pages, 1287668 bytes).
 PDF statistics:
  244 PDF objects out of 1000 (max. 8388607)
  136 compressed objects within 2 object streams

@@ -35,11 +35,13 @@
 
 \author[add1]{Pavel Gladyshev}
 \ead{pavel.gladyshev@ucd.ie}
-\author[add2]{Joshua Isaac James}
+\author[add2]{Joshua I. James\corref{cor1}}
+\ead{joshua@cybercrimetech.com}
+\cortext[cor1]{Corresponding author}
 \address[add1]{Digital Forensics Investigation Research Laboratory, University College Dublin, Belfield, Dublin 4, Ireland}
 \address[add2]{Digital Forensics Investigation Research Laboratory, Hallym University, 1 Hallimdaehak-gil, Chuncheon-si, Gangwon-do, South Korea}
 \begin{abstract}
-This article explores a novel approach to file carving by viewing it as a decision problem. It allows us to design algorithms that produce best effort results under the given resource constraints. It is important for digital forensic triage as well as for e-discovery. As an illustration, we develop a novel file carving algorithm together with a novel linear-time detector of JPEG data and examine its performance.
+This article explores a novel approach to file carving by viewing it as a decision problem. This allows us to design algorithms that produce best-effort results under given resource constraints. Resource-constrained carving is important for digital forensic triage, as well as for e-discovery, where a reduction in carving time may be preferred to completeness. In this work we give a formal definition of decision-theoretic file carving. As an illustration, we developed a JPEG file carving tool using the described decision-theoretic algorithm. We then examine the results of decision-theoretic file carving compared with linear carving methods to demonstrate when decision-theoretic carving is most useful.
 \end{abstract}
 
 \begin{keyword}
@@ -83,10 +85,10 @@ The performance of the basic sequential carving algorithm was improved upon by R
 
 File carving is a process of exploration, and it is instructive to consider file carving as an analogy of the Battleships\footnote{The Battleships game is played as follows: each player has a pad of paper with two 100-square grids (maps) -- one for arranging the player's ships and the other for noting the discovered locations of the opponent's ships. Before the start of the game, each player secretly arranges their ships on their grid. A ship occupies a number of consecutive squares and is oriented either vertically or horizontally. The ships cannot overlap. The game proceeds in turns with each player sending a "bomb" to a particular square on the enemy grid. The other player then responds whether the "bombing" succeeded in damaging one of their ships. A ship is destroyed when all of the squares it occupies are hit by the opponent. The game ends when one of the players completely destroys the other player's fleet.} game, in which one player -- the data storage -- arranges her ships (the relevant files) on a ``canal'' and the other player -- the file carver -- tries to destroy the opponent's ships with the minimal number of bombs (see Fig. \ref{fig:battleships_on_a_canal}).  
 
-The simplest strategy that is guaranteed to destroy the opponent's fleet is to bomb all squares consecutively from left to right, which is precisely what sequential carvers do. Although effective, this strategy is not necessarily the most efficient. A human players of Battleships would randomly bomb the opponent's map until one of the ships is hit. After that, she would bomb the adjacent squares until the damaged ship is completely destroyed. It is intuitively plausible that similar approach could be used in file carving and that it may outperform sequential carving algorithms. In the rest of this paper we present theoretical and experimental results that validate this intuition using ecision theory, numeric simulation, and actual file carving experiments.
+The simplest strategy that is guaranteed to destroy the opponent's fleet is to bomb all squares consecutively from left to right, which is precisely what sequential carvers do. Although effective, this strategy is not necessarily the most efficient. A human players of Battleships would randomly bomb the opponent's map until one of the ships is hit. After that, she would bomb the adjacent squares until the damaged ship is completely destroyed. It is intuitively plausible that similar approach could be used in file carving and that it may outperform sequential carving algorithms. In the rest of this paper we present theoretical and experimental results that validate this intuition using decision theory, numeric simulation, and actual file carving experiments.
 
 \begin{figure*}
-  \centerline{\includegraphics[width=0.6\textwidth]{fig3}}
+  \centerline{\includegraphics[width=0.6\textwidth]{figures/fig3}}
   \caption{A 1-dimensional Battleships game.}
   \label{fig:battleships_on_a_canal}
 \end{figure*}
@@ -107,7 +109,7 @@ O=\left\{o_1,o_2,\dots o_m \right\}
 
 The likelihood of a particular outcome $o_j \in O$ happening as a result of the action $a_i \in A$ is represented by the conditional probability $P(o_i \mid a_i)$. 
 
-The desirability of a particular outcome is modelled by the \emph{utility} function $u()$ that assigns a real-valued score to each outcome. The higher the utility score, the more desirable is the outcome. The cost associated with doing a particular action can be modeled as a reduction of utility scores of the corresponding outcomes. To model it formally we define $u()$ as function of both the outcome \emph{and} the action:
+The desirability of a particular outcome is modeled by the \emph{utility} function $u()$ that assigns a real-valued score to each outcome. The higher the utility score, the more desirable is the outcome. The cost associated with doing a particular action can be modeled as a reduction of utility scores of the corresponding outcomes. To model it formally we define $u()$ as function of both the outcome \emph{and} the action:
 
 \begin{equation}
 u : O \times A \rightarrow \mathbb{R}
@@ -166,12 +168,12 @@ $T_{proc}(a)$ is the time required to process a disk block. It consists of a rel
 
 \begin{figure*}
 	\center
-	\includegraphics[width=0.9\textwidth]{wc_fig}
+	\includegraphics[width=0.9\textwidth]{figures/wc_fig}
 	\caption{The total amount of data recovered by a sequential file carver as a function of time. In this example the relevant data (JPEG images) occupied approximately 5\% of a 32Gb disk image.}
 	\label{fig:sequential}
 \end{figure*}
 
-The substitution of  (\ref{eqn:utility-def}) for $u(o,a)$ in (\ref{eq:decision}) produces the deicsion principle for file carving:
+The substitution of  (\ref{eqn:utility-def}) for $u(o,a)$ in (\ref{eq:decision}) produces the decision principle for file carving:
 
 \begin{equation} \label{eq:carving-decision}
 a = \argmax_{a \in A} \left( \frac{1}{T_{proc}(a)} p(a,l)\right)
@@ -199,7 +201,7 @@ A digital camera sensor typically produces raw photographs at a fixed resolution
 Figure \ref{fig:jpeg-dist} shows a histogram of sizes of digital photographs from a personal collection of 5000 digital photographs accumulated over 10 years. There are several peaks corresponding to different cameras and image quality settings used over the years. Each peak resembles the ``bell curve'' of the normal distribution\footnote{Recall that JPEG encoding divides the image into square fragments $8 \times 8$ pixels. Every such fragment is compressed independently meaning that by the central limit theorem of probability theory, the probability distribution of JPEG sizes for a particular camera setting converges to normal (Gaussian) distribution.}. Note that the vast majority of JPEG files in Figure \ref{fig:jpeg-dist} are bigger than 700 Kb in size. The two right-most peaks in the histogram correspond to images produced by a newer camera, whose JPEG files a bigger than 2000 Kb. It is highly likely that mainstream camera resolution will continue to grow leading to larger size of JPEG files. 
 
 \begin{figure*}
-  \centerline{\includegraphics[width=0.9\textwidth]{jpeg-sizes}}
+  \centerline{\includegraphics[width=0.9\textwidth]{figures/jpeg-sizes}}
   \caption{Histogram of actual file sizes from a personal collection of raw digital photographs in JPEG format. Horizontal axis is the size of files in Kibibytes, vertical axis is the number of files. Each of the peaks visible in the histogram corresponds to a particular camera and image size and quality settings.}
   \label{fig:jpeg-dist}
 \end{figure*}
@@ -297,13 +299,13 @@ To get a sense of the shape and properties of The probability of encountering JP
 We began our analysis by considering a very simple case: the drive contains single fixed-size JPEG file. The results of the small scale simulation are shown in Figure \ref{fig:fig-20blk-11min-11max2d}. The plot of $P(o=r|b_i)$ has trapezoidal shape. To see why it is so, consider Figure \ref{fig:pa_explan}. Under the assumption of non-fragmentation, an 11-block continuous JPEG file can reside in one of 10 possible positions on a 20-block drive. Observe that two blocks in the middle of the drive are occupied in every possible position of the file, while the very first and the very last blocks on the drive are occupied only in one of ten possible positions of the file. That results in a trapezoidal form of the probability distribution $P(o=r|b_i)$ seen in Figure \ref{fig:fig-20blk-11min-11max2d}.
 
 \begin{figure*}
-  \centerline{\includegraphics[width=0.9\textwidth]{fig-20blk-11min-11max2d}}
+  \centerline{\includegraphics[width=0.9\textwidth]{figures/fig-20blk-11min-11max2d}}
   \caption{Probability of finding relevant data in a particular disk block, assuming that JPEG files are \emph{exactly} 11 blocks in size.}
   \label{fig:fig-20blk-11min-11max2d}
 \end{figure*}
 
 \begin{figure*}
-  \centerline{\includegraphics[width=\textwidth]{pa_explain.pdf}}
+  \centerline{\includegraphics[width=\textwidth]{figures/pa_explain.pdf}}
   \caption{Explanation of the trapezoidal form of the $p(a)$ probability distribution in Figure \ref{fig:fig-20blk-11min-11max2d}.}
   \label{fig:pa_explan}
 \end{figure*}
@@ -313,7 +315,7 @@ Another case we considered is when the drive contains several non-fragmented fil
 Note also, that if we see someone else's flashlight on the floor and have no prior information about the number of batteries in it, we ought to assume all possible battery configurations equally likely, and base our decision making on the probability plot that is the average of probability plots for all possible number of batteries inside.
 
 \begin{figure*}
-  \centerline{\includegraphics[width=0.9\textwidth]{fig-20blk-6min-6max3d}}
+  \centerline{\includegraphics[width=0.9\textwidth]{figures/fig-20blk-6min-6max3d}}
   \caption{Probability of finding relevant data in a particular disk block, given that certain number of blocks are occupied by relevant data and assuming that JPEG files are \emph{exactly} 6 blocks in size.}
   \label{fig:fig-20blk-6min-6max3d}
 \end{figure*}
@@ -321,13 +323,13 @@ Note also, that if we see someone else's flashlight on the floor and have no pri
 The final case we considered was the drive that contains a number of JPEG files above certain size. The corresponding simulation results are shown in Figure \ref{fig:fig-20blk-6min-20max3d} and Figure \ref{fig:fig-20blk-6min-20max2d}. The latter is the average probability plot assuming that all possible file configurations on the drive are equally likely. 
 
 \begin{figure*}
-  \centerline{\includegraphics[width=0.9\textwidth]{fig-20blk-6min-20max3d}}
+  \centerline{\includegraphics[width=0.9\textwidth]{figures/fig-20blk-6min-20max3d}}
   \caption{Probability of finding relevant data in a particular disk block, given that certain number of blocks are occupied by relevant data and assuming that JPEG files are \emph{at least} 6 blocks in size.}
   \label{fig:fig-20blk-6min-20max3d}
 \end{figure*}
 
 \begin{figure*}
-  \centerline{\includegraphics[width=0.9\textwidth]{fig-20blk-6min-20max2d}}
+  \centerline{\includegraphics[width=0.9\textwidth]{figures/fig-20blk-6min-20max2d}}
   \caption{Probability of finding relevant data in a particular disk block, assuming that JPEG files are \emph{at least} 6 blocks in size.}
   \label{fig:fig-20blk-6min-20max2d}
 \end{figure*}
@@ -341,7 +343,7 @@ Our model can also be used to explore the result of testing a particular block o
 Figure \ref{fig:fig-20blk-6min-20max-testloc-5-0-2d} shows the result of testing the drive block $b_5$ corresponding to the first probability peak in Figure \ref{fig:fig-20blk-6min-20max2d} and finding no JPEG data there. Observe that the negative test at $b_5$ implies that blocks $b_0 \dots b_4$ also do not contain JPEG data. It is the consequence of assuming a lower bound of 6 blocks on JPEG file size together with the absence of fragmentation. 
 
 \begin{figure*}
-  \centerline{\includegraphics[width=0.9\textwidth]{fig-20blk-6min-20max-testloc-5-0-2d}}
+  \centerline{\includegraphics[width=0.9\textwidth]{figures/fig-20blk-6min-20max-testloc-5-0-2d}}
   \caption{Posterior probability of finding JPEG data in a particular disk block, after testing $b_5$ and finding no relevant JPEG data there. All JPEG files are assumed to be at least 6 blocks in length.}
   \label{fig:fig-20blk-6min-20max-testloc-5-0-2d}
 \end{figure*}
@@ -353,7 +355,7 @@ The implication of the Figure \ref{fig:fig-20blk-6min-20max-testloc-5-0-2d} is t
 Figure \ref{fig:fig-20blk-6min-20max-testloc-5-1-2d} shows the result of testing drive block $b_5$ and finding that it contains relevant data. As expected, positive test increases the probability of finding JPEG data at $b_5$ to $1.0$. Note that the next most likely blocks to contain JPEG data are blocks $b_4$ and $b_6$ adjacent to $b_5$. This result is in full accordance with the human intuition of how to play the Battleships game: once an enemy ship is discovered by random bombing, human player finishes it by bombing squares adjacent to the first successful hit.
 
 \begin{figure*}
-  \centerline{\includegraphics[width=0.9\textwidth]{fig-20blk-6min-20max-testloc-5-1-2d}}
+  \centerline{\includegraphics[width=0.9\textwidth]{figures/fig-20blk-6min-20max-testloc-5-1-2d}}
   \caption{Posterior probability of finding JPEG data in a particular disk block, after testing $b_5$ and finding that it contains JPEG data. All JPEG files are assumed to be at least 6 blocks in length.}
   \label{fig:fig-20blk-6min-20max-testloc-5-1-2d}
 \end{figure*}
@@ -368,13 +370,13 @@ Two types of experiments were performed: one group of experiments measured $T_{p
 To measure the time required for random block access, 1,000 random block tests were performed for each drive. Each random block test consists of a drive seek operation followed by reading the target disk block and performing JPEG data detection on the read data using Algorithm \ref{alg:detector}. The time required to complete each experiment was measured. We denote this time as $T_{rbt}(a)$. Figures \ref{fig:seek_time_hdd} and \ref{fig:seek_time_ssd} show the empirical $T_{rbt}(a)$ values for the 120Gb HDD and 120Gb SSD respectively. 
 
 \begin{figure*}
-  \centerline{\includegraphics[width=0.9\textwidth]{seek-time-hdd}}
+  \centerline{\includegraphics[width=0.9\textwidth]{figures/seek-time-hdd}}
   \caption{Time of random block testing on Fujitsu 120 Gb HDD.}
   \label{fig:seek_time_hdd}
 \end{figure*}
 
 \begin{figure*}
-  \centerline{\includegraphics[width=0.9\textwidth]{seek-time-ssd}}
+  \centerline{\includegraphics[width=0.9\textwidth]{figures/seek-time-ssd}}
   \caption{Time of random block testing on SSDNow 120 Gb SSD.}
   \label{fig:seek_time_ssd}
 \end{figure*}
@@ -392,13 +394,13 @@ Although random block access is important for decision-theoretic carving, we sho
 To determine how these approaches compare, we conducted additional experiments measuring the time taken to read and apply signature matching to large stretches of consecutive blocks on the 120Gb Fujitsu HDD and the 120Gb SSDNow SSD. As expected, $T_{seq}(a)$ grows at a rate proportional to $a$ for both SSD and HDD. To compare the behaviour of $T_{rbt}(a)$ and $T_{seq}(a)$, we plotted them together for the SSD (Figure \ref{fig:processing_time_ssd}) and HDD (Figure \ref{fig:processing_time_hdd}) respectively. 
 
 \begin{figure*}
-  \centerline{\includegraphics[width=0.9\textwidth]{processing-time-ssd}}
+  \centerline{\includegraphics[width=0.9\textwidth]{figures/processing-time-ssd}}
   \caption{$T_{rbt}(a)$ and $T_{seq}(a)$ calculated for SSDNow 120 Gb SSD.}
   \label{fig:processing_time_ssd}
 \end{figure*}
 
 \begin{figure*}
-  \centerline{\includegraphics[width=0.9\textwidth]{processing-time-hdd}}
+  \centerline{\includegraphics[width=0.9\textwidth]{figures/processing-time-hdd}}
   \caption{$T_{rbt}(a)$ and $T_{seq}(a)$ calculated for Fujitsu 120 Gb HDD.}
   \label{fig:processing_time_hdd}
 \end{figure*}
