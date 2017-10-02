@@ -11,7 +11,7 @@ The code is written in Pure C for portability, but it depends on libtsk (the Thl
 * Install libtsk3-3, and optionally libmagic-dev, liblinear-dev, and libsvm-dev packages (using apt-get install on Ubuntu or brew install on Mac)
 * Check that you have working gcc and make 
 * Clone this repository
-* Edit Makefile to uncomment the appropriate LIB=... definition (Mac is enabled by default, so if you are using Ubuntu you will need to delete it and uncomment one for Linux)
+* Edit Makefile to specify the appropriate LIBS=... and LIB_DIR=... values (The default is Mac OS, so if you are using Ubuntu you will need to comment out current LIBS= and uncomment one for Linux)
 * Open terminal, navigate to the root folder of the cloned repo, then run make.  
 
 If you get any problems compiling it, do send us a message.
