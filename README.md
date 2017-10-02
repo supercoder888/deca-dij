@@ -7,12 +7,19 @@ The code is written in Pure C for portability, but the code depends on libtsk (t
 
 ### How do I get set up? ###
 
-* Use Ubuntu or Mac OS X (
-* Install libtsk3-3, (and optionally libmagic-dev, liblinear-dev, and libsvm-dev packages) using apt-get install 
-* Check that you have gcc and make installed
+* Use Ubuntu or Mac OS X
+* Install libtsk3-3, and optionally libmagic-dev, liblinear-dev, and libsvm-dev packages (using apt-get install on Ubuntu or brew install on Mac)
+* Check that you have working gcc and make 
 * Clone this repository
 * Edit Makefile to uncomment the appropriate LIB=... definition (Mac is enabled by default, so if you are using Ubuntu you will need to comment it and uncomment one for Linux
-* Open terminal and navigate to the root folder of the cloned repository, then run make.  If you get any problems compiling it, do send us a message.
+* Open terminal, navigate to the root folder of the cloned repo, then run make.  
+
+If you get any problems compiling it, do send us a message.
+
+The project was initially developed with Eclipse, so if you like Eclipse, please go ahead and use it:
+
+* Download & Unzip Eclipse-CDT from eclipse.org
+* Install eGit Eclipse plugin from eclipse.org if you like (integrates Git & Eclipse)
 
 ### Who do I talk to? ###
 
