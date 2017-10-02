@@ -2,8 +2,8 @@
 
 This is a proof-of-concept project intended to demonstrate / evaluate decision-theoretic approach to digital forensics. 
 It is a command line utility with a variety of command line options (run deca without parameters to see them).
-Can be compiled/used on Ubuntu or Mac. It shouldn't be difficult to port it to Windows environment.
-The code is written in Pure C for portability, but the code depends on libtsk (the Thleuthkit library) being present.
+It has been compiled and tested on Ubuntu Linux or Mac. It shouldn't be difficult to port it to Windows environment.
+The code is written in Pure C for portability, but it depends on libtsk (the Thleuthkit library) being available on the target platform.
 
 ### How do I get set up? ###
 
