@@ -15,6 +15,12 @@
 #define PROFILER_H_
 
 #include <stdio.h>
+#if defined(_WIN32) || defined(_WIN64)
+   //tbd
+#else
+	#include <sys/time.h>
+#endif
+
 #include <signal.h>
 #include <time.h>
 
