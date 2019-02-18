@@ -1,4 +1,4 @@
-\begin{thebibliography}{20}
+\begin{thebibliography}{21}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname url\endcsname\relax
   \def\url#1{\texttt{#1}}\fi
@@ -8,6 +8,13 @@
 Casey, E., Ferraro, M., Nguyen, L., nov 2009. {Investigation Delayed Is Justice
   Denied: Proposals for Expediting Forensic Examinations of Digital Evidence*}.
   Journal of Forensic Sciences 54~(6), 1353--1364.
+
+\bibitem[{Garfinkel et~al.(2009)Garfinkel, Farrell, Roussev, and
+  Dinolt}]{Garfinkel2009}
+Garfinkel, S., Farrell, P., Roussev, V., Dinolt, G., sep 2009. {Bringing
+  science to digital forensics with standardized forensic corpora}. Digital
+  Investigation 6, S2--S11.
+\newline\urlprefix\url{http://linkinghub.elsevier.com/retrieve/pii/S1742287609000346}
 
 \bibitem[{Garfinkel(2007)}]{garfinkel2007carving}
 Garfinkel, S.~L., 2007. Carving contiguous and fragmented files with fast

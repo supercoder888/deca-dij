@@ -8,7 +8,11 @@
  */
 
 #include <unistd.h>
-#include <dirent.h>
+#if defined(_WIN32) || defined(_WIN64)
+    // tbd
+#else
+	#include <dirent.h>
+#endif
 #include <tsk/libtsk.h>
 #include <stdio.h>
 #include <string.h>
@@ -24,6 +28,9 @@ int deca_init(Deca *c,
 			  int minsize)
 {
 	int result;
+#if defined(_WIN32) || defined(_WIN64)
+    // tbd
+#else
 	DIR *tmp;
 
     /* Verify that output path is a writable directory */
@@ -39,6 +46,7 @@ int deca_init(Deca *c,
     	c->outputPath = malloc(strlen(outputPath)+1);
     	strncpy(c->outputPath,outputPath,strlen(outputPath)+1);
 	}
+#endif
     /* Record address of the given block device structure */
     c->b = bd;
 
