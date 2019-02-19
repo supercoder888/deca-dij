@@ -1,5 +1,6 @@
 /Debug/
 /Release/
 /Release-MacOSX/
-*.o
 deca
+*.o
+*.obj
