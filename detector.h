@@ -35,7 +35,7 @@ typedef struct deca_detector_struct
 #define PREDICT svm_predict
 #endif
 #endif
-
+   char _placeholder;
 } Deca_detector;
 
 /**

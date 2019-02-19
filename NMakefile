@@ -1,0 +1,13 @@
+# This Makefile is for NMAKE
+
+CL=cl.exe
+CFLAGS=/I.\win32 
+
+CS=main.c bd.c detector.c deca.c profiler.c estimator.c
+HS=estimator.h detector.h deca.h bd.h profiler.h
+LIBS=.\win32\libtsk.lib
+
+DEPS=$(CS) $(HS) $(LIBS)
+
+deca.exe: $(DEPS)
+	$(CL) /Fe.\win32\deca.exe $(CFLAGS) $(CS) $(LIBS) 

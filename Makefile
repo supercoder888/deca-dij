@@ -1,7 +1,5 @@
 CC=gcc
-#CC=cl
 CFLAGS=-I.
-#LIB_DIR=./win32
 
 LIBS=-ltsk  
 DEPS=estimator.h detector.h deca.h bd.h profiler.h
