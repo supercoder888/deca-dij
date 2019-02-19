@@ -9,4 +9,4 @@ OBJ=main.o bd.o detector.o deca.o profiler.o estimator.o
 	$(CC) -c -o $@ $< $(CFLAGS) 
 
 deca: $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS) -L$(LIB_DIR) $(LIBS)
+	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
