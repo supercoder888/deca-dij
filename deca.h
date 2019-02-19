@@ -11,7 +11,7 @@
 #define DECA_H_
 
 #include <stdio.h>
-#include <tsk/libtsk.h>
+#include "tsk/libtsk.h"
 #include "detector.h"
 #include "estimator.h"
 #include "profiler.h"
